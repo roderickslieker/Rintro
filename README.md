@@ -1,5 +1,6 @@
 Introduction to R
 ================
+R.Slieker
 
 Where to get this page from:
 ----------------------------
@@ -9,26 +10,37 @@ Where to get this page from:
 Introduction
 ------------
 
+The R interface
+---------------
+
 -   Originated from proprietary S programming language
 
 -   Comes in many flavours, like GUI (hardly a user interface), Rstudio, Eclipse
 
--   Rstudio is very useful: <https://www.rstudio.com/products/RStudio/>
+-   Save scripts as R files, can be opened with all kinds of software (R, Rstudio, sublime, Notepad etc. )
+
+-   Save objects to Rdata files, so you can continue with it next time without the need for rerunning the complete script
+
+Other software to be used with R
+--------------------------------
+
+-   Rstudio is very useful: <https://www.rstudio.com/products/RStudio/> It has many advantages: integrated help, use of tab,
 
 -   Sublime when only typing syntax (to link with servers): <https://www.sublimetext.com/>
 
--   Git to track your code: <https://git.lumc.nl>
-
 -   Packages: for an (almost infinity) number of applications people have developed packages, for example Bioconductor: <http://bioconductor.org/>
 
--   Suggested literature:
+-   Git to track your code: <https://git.lumc.nl>
 
-The art of R programming, Normal Matlof, Starch Press
+Suggested literature:
+---------------------
 
-Introductory Statistics with R, Peter Dalgaard, Springer
+*The art of R programming, Normal Matlof, Starch Press*
 
-Starting simple
----------------
+*Introductory Statistics with R, Peter Dalgaard, Springer*
+
+Starting simple with R
+----------------------
 
 ``` r
 1+1
@@ -45,6 +57,16 @@ a + a
     ## [1] 2
 
 ``` r
+#But the equal sign also works!
+aa = 1
+aa+aa
+```
+
+    ## [1] 2
+
+``` r
+#But professionals use the arrow and not the equal sign to distinguish from  == :)
+
 #Or multiple values ot variables
 b <- c(1,2,3) # c, concatenate
 b
@@ -52,10 +74,10 @@ b
 
     ## [1] 1 2 3
 
-String classes
---------------
+The main classes
+----------------
 
--   Numeric
+-   Numeric and integers
 -   Characters
 -   Factors
 
@@ -77,7 +99,7 @@ class(characters)
     ## [1] "character"
 
 ``` r
-#Factor
+#Factor, same as character but with the levels in the data
 factors <- factor(c("A","A","B","B","C"), levels=c("A","B","C"))
 class(factors)
 ```
@@ -93,7 +115,7 @@ Advantages: can hold multiple classes, columns can be viewed easily Disadvantage
 
 -   Matrices
 
-Advantage: very quick and useful for matrix calculations. Disadvantage: less easy to modify (add columns)
+Advantage: very quick and useful for matrix calculations. Disadvantage: less easy to modify (add columns, change class of data)
 
 ``` r
 #Data.frame: can hold multiple classes
@@ -155,17 +177,56 @@ class(mtrx)
 
     ## [1] "matrix"
 
+``` r
+#Calculate something at once
+mtrx*mtrx
+```
+
+    ##      [,1] [,2] [,3] [,4] [,5]
+    ## [1,]    1   36  121  256  441
+    ## [2,]    4   49  144  289  484
+    ## [3,]    9   64  169  324  529
+    ## [4,]   16   81  196  361  576
+    ## [5,]   25  100  225  400  625
+
 Modifying objects
 -----------------
 
 ``` r
+#Adding rownames to files 
+rownames(df) <- c("A","B","C")
+#The file has already colnames
+colnames(df)
+```
+
+    ## [1] "Group"   "Outcome"
+
+``` r
+#What doesn't work:
+dim(mtrx)
+```
+
+    ## [1] 5 5
+
+``` r
+#rownames(mtrx) <- c("A","B","C")
+#Why not?
+
+## Learn to understand error codes (read them carefully)
+
+## If you don't get the error, google it. There is ALWAYS someone before you who had the same question.
+
+
+## This does work. Why?
+rownames(mtrx) <- c("A","B","C","D","E")
+
 #Data.frame
 df[1:2, ] #First two lines
 ```
 
     ##   Group Outcome
-    ## 1     1       2
-    ## 2     2       3
+    ## A     1       2
+    ## B     2       3
 
 ``` r
 #Add column
@@ -174,18 +235,18 @@ head(df)
 ```
 
     ##   Group Outcome NewCol
-    ## 1     1       2      1
-    ## 2     2       3      2
-    ## 3     3       6      5
+    ## A     1       2      1
+    ## B     2       3      2
+    ## C     3       6      5
 
 ``` r
 #Matrix:
 mtrx[1:2,]
 ```
 
-    ##      [,1] [,2] [,3] [,4] [,5]
-    ## [1,]    1    6   11   16   21
-    ## [2,]    2    7   12   17   22
+    ##   [,1] [,2] [,3] [,4] [,5]
+    ## A    1    6   11   16   21
+    ## B    2    7   12   17   22
 
 ``` r
 mtrx[1:2] #Different!
@@ -193,14 +254,35 @@ mtrx[1:2] #Different!
 
     ## [1] 1 2
 
+``` r
+# List 
+list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
+```
+
+    ## $GroupA
+    ## [1] 1 2 3
+    ## 
+    ## $GroupB
+    ## [1] 2 3 4 5
+    ## 
+    ## $GroupC
+    ## [1] 3 4 5
+
 Reading from files
 ------------------
 
 R can read all types of files (with or without required packages), such as txt, csv, xlsx (package: xlsx), sav spss file (package: Hmisc)
 
 ``` r
+# Setting a working directory (= tell R where to find files and where to save files.)
+setwd("/Users/roderick/Documents/Onderwijs/IntroR/")
+
 #Reading csv files (comma delimited)
-IrisCSV <- read.table("https://raw.githubusercontent.com/roderickslieker/Rintro/master/Iris.csv", sep=",", header=T)
+IrisCSV <- read.table("Iris.csv", sep=",", header=T)
+
+#Or we give the full path
+IrisCSV <- read.table("/Users/roderick/Documents/Onderwijs/IntroR/Iris.csv", sep=",", header=T)
+
 head(IrisCSV)
 ```
 
@@ -225,7 +307,7 @@ str(IrisCSV)
 
 ``` r
 #Reading tab delimited 
-IrisTXT <- read.table("https://raw.githubusercontent.com/roderickslieker/Rintro/master/Iris.txt", sep="\t", header=T)
+IrisTXT <- read.table("Iris.txt", sep="\t", header=T)
 head(IrisTXT)
 ```
 
@@ -248,14 +330,77 @@ str(IrisTXT)
     ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
     ##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 
+Summary statistics
+------------------
+
+There are various ways of calcalating summary statistics. A useful function is **by**.
+
+``` r
+# Means
+# by(data = someVariable, INDICES = someGrouping, FUN = aGroupingFunction)
+
+by(data = IrisCSV$Sepal.Length, INDICES = IrisCSV$Species, mean)
+```
+
+    ## IrisCSV$Species: setosa
+    ## [1] 5.006
+    ## -------------------------------------------------------- 
+    ## IrisCSV$Species: versicolor
+    ## [1] 5.936
+    ## -------------------------------------------------------- 
+    ## IrisCSV$Species: virginica
+    ## [1] 6.588
+
+``` r
+# Same as:
+by(IrisCSV$Sepal.Length, IrisCSV$Species, mean)
+```
+
+    ## IrisCSV$Species: setosa
+    ## [1] 5.006
+    ## -------------------------------------------------------- 
+    ## IrisCSV$Species: versicolor
+    ## [1] 5.936
+    ## -------------------------------------------------------- 
+    ## IrisCSV$Species: virginica
+    ## [1] 6.588
+
+``` r
+#Store in variable
+meanGroup <- by(data = IrisCSV$Sepal.Length, INDICES = IrisCSV$Species, mean)
+class(meanGroup)
+```
+
+    ## [1] "by"
+
+``` r
+#Small trick:
+as.list(meanGroup)
+```
+
+    ## $setosa
+    ## [1] 5.006
+    ## 
+    ## $versicolor
+    ## [1] 5.936
+    ## 
+    ## $virginica
+    ## [1] 6.588
+
 Packages
 --------
 
 Packages are an infinite rich source to facilitate your analysis
 
-*To install packages from CRAN* install.packages("ggplot2")
+*To install packages from CRAN*
 
-*Or when from Bioconductor:* source("<https://bioconductor.org/biocLite.R>") biocLite("IRanges")
+install.packages("ggplot2")
+
+*Or when from Bioconductor:*
+
+source("<https://bioconductor.org/biocLite.R>")
+
+biocLite("IRanges")
 
 Plotting
 --------
@@ -272,11 +417,12 @@ plot(IrisCSV$Sepal.Length, IrisCSV$Sepal.Width, xlab="Sepal length", ylab="Sepal
 ![](README_files/figure-markdown_github-ascii_identifiers/plotting-1.png)
 
 ``` r
-ggplot(IrisCSV, aes(x=Sepal.Length, y=Sepal.Width))+
+ggplot(IrisCSV, aes(x=Sepal.Length, y=Sepal.Width, col=Species))+
   geom_point()+
   ggtitle("Some title")+
   xlab("Sepal length")+
-  ylab("Sepal width")
+  ylab("Sepal width")+
+  scale_color_manual(values = c("#009AC7","#132B41","#8B1A4F"))
 ```
 
 ![](README_files/figure-markdown_github-ascii_identifiers/plotting-2.png)
@@ -289,12 +435,37 @@ boxplot(IrisCSV$Sepal.Length~IrisCSV$Species, xlab="Sepal length", ylab="Sepal w
 ![](README_files/figure-markdown_github-ascii_identifiers/plotting-3.png)
 
 ``` r
-ggplot(IrisCSV, aes(x=Species, y=Sepal.Length, fill=Species))+
-  geom_boxplot()+
-  ggtitle("Some title")+
-  xlab("Sepal length")+
-  ylab("Sepal width")+
-  scale_fill_manual(values = c("#009AC7","#132B41","#8B1A4F"))
+ggplot(IrisCSV, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
+  geom_boxplot()+ #What kind of graph?
+  ggtitle("Some title")+ #Add title to graph
+  xlab("Sepal length")+ #Add x-axis labels
+  ylab("Sepal width")+ #Add y-axis labels
+  scale_fill_manual(values = c("#009AC7","#132B41","#8B1A4F")) # Change colors using HEX colors
 ```
 
 ![](README_files/figure-markdown_github-ascii_identifiers/plotting-4.png)
+
+``` r
+# Smoothed line graph
+ggplot(IrisCSV, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
+  geom_point()+
+  geom_smooth(method=lm)+
+  ggtitle("Some title")+
+  xlab("Sepal length")+
+  ylab("Sepal width")+
+  scale_color_manual(values = c("#009AC7","#132B41","#8B1A4F"))
+```
+
+![](README_files/figure-markdown_github-ascii_identifiers/plotting-5.png)
+
+``` r
+ggplot(IrisCSV, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
+  geom_point()+
+  geom_smooth(method=loess)+
+  ggtitle("Some title")+
+  xlab("Sepal length")+
+  ylab("Sepal width")+
+  scale_color_manual(values = c("#009AC7","#132B41","#8B1A4F"))
+```
+
+![](README_files/figure-markdown_github-ascii_identifiers/plotting-6.png)
