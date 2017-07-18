@@ -6,8 +6,6 @@ Where to get this page from:
 
 <http://goo.gl/cWAAyv>
 
-content\_copyCopy short URL
-
 Introduction
 ------------
 
@@ -250,9 +248,53 @@ str(IrisTXT)
     ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
     ##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 
-Plotting: mult
-==============
+Packages
+--------
+
+Packages are an infinite rich source to facilitate your analysis
+
+*To install packages from CRAN* install.packages("ggplot2")
+
+*Or when from Bioconductor:* source("<https://bioconductor.org/biocLite.R>") biocLite("IRanges")
+
+Plotting
+--------
+
+R base (without packages) can plot all kind of plots
 
 ``` r
 library(ggplot2)
+
+#Scatter plot
+plot(IrisCSV$Sepal.Length, IrisCSV$Sepal.Width, xlab="Sepal length", ylab="Sepal width")
 ```
+
+![](README_files/figure-markdown_github-ascii_identifiers/plotting-1.png)
+
+``` r
+ggplot(IrisCSV, aes(x=Sepal.Length, y=Sepal.Width))+
+  geom_point()+
+  ggtitle("Some title")+
+  xlab("Sepal length")+
+  ylab("Sepal width")
+```
+
+![](README_files/figure-markdown_github-ascii_identifiers/plotting-2.png)
+
+``` r
+# Boxplot
+boxplot(IrisCSV$Sepal.Length~IrisCSV$Species, xlab="Sepal length", ylab="Sepal width")
+```
+
+![](README_files/figure-markdown_github-ascii_identifiers/plotting-3.png)
+
+``` r
+ggplot(IrisCSV, aes(x=Species, y=Sepal.Length, fill=Species))+
+  geom_boxplot()+
+  ggtitle("Some title")+
+  xlab("Sepal length")+
+  ylab("Sepal width")+
+  scale_fill_manual(values = c("#009AC7","#132B41","#8B1A4F"))
+```
+
+![](README_files/figure-markdown_github-ascii_identifiers/plotting-4.png)
