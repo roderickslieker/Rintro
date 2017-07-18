@@ -1,0 +1,131 @@
+---
+title: "Introduction to R"
+output: github_document
+---
+
+
+## Where to get this page from: 
+
+
+## Beginning simple
+
+- Originated from proprietary S programming language
+
+- Comes in many flavours, like GUI (hardly a user interface), Rstudio, Eclipse
+
+- Rstudio is very useful: https://www.rstudio.com/products/RStudio/
+
+- Sublime when only typing syntax (to link with servers): https://www.sublimetext.com/
+
+- Git to track your code: https://git.lumc.nl 
+
+- Packages: for an (almost infinity) number of applications people have developed packages, for example Bioconductor: http://bioconductor.org/
+
+- Suggested literature:
+
+
+```{r start}
+1+1
+
+#Assign values to variables
+a <- 1
+a + a
+
+#Or multiple values ot variables
+b <- c(1,2,3) # c, concatenate
+b
+```
+
+
+
+## String classes
+- Numeric
+- Characters
+- Factors
+
+```{r classes}
+#Numeric
+num <- c(1,2,3)
+#Class can be used to view the classs
+class(num)
+
+#Character
+characters <- c("A","B","C")
+class(characters)
+
+#Factor
+factors <- factor(c("A","A","B","B","C"), levels=c("A","B","C"))
+class(factors)
+```
+
+## Objects
+- Data frames
+  
+  Advantages: can hold multiple classes, columns can be viewed easily
+  Disadvantage: one cannot do analyses on the entire object
+  
+
+- Matrices
+  
+  Advantage: very quick and useful for matrix calculations.
+  Disadvantage: less easy to modify (add columns)
+
+```{r objects}
+#Data.frame: can hold multiple classes
+df <- data.frame(Group = c(1,2,3), Outcome = c(2,3,6))
+
+#head can be used to view objects
+head(df)
+#str will give the classes of the different columns
+str(df)
+class(df)
+
+#Groups can called with the dollar sign (dataframe only)
+df$Group
+
+
+#Matrix:
+mtrx <- matrix(1:25, nrow=5)
+head(mtrx)
+str(mtrx)
+class(mtrx)
+```
+
+## Modifying objects
+
+```{r modifying}
+#Data.frame
+df[1:2, ] #First two lines
+
+#Add column
+df$NewCol <- c(1,2,5)
+head(df)
+
+#Matrix:
+mtrx[1:2,]
+mtrx[1:2] #Different!
+
+```
+
+## Reading from files
+
+R can read all types of files (with or without required packages), such as txt, csv, xlsx (package: xlsx), sav spss file  (package: Hmisc)
+
+```{r read}
+#read.table(" ")
+
+```
+
+
+
+
+#Plotting: mult
+```{r plotting}
+
+```
+
+
+
+
+
+
