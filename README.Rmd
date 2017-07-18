@@ -5,9 +5,10 @@ output: github_document
 
 
 ## Where to get this page from: 
+http://goo.gl/cWAAyv
 
 
-## Beginning simple
+## Introduction
 
 - Originated from proprietary S programming language
 
@@ -22,8 +23,13 @@ output: github_document
 - Packages: for an (almost infinity) number of applications people have developed packages, for example Bioconductor: http://bioconductor.org/
 
 - Suggested literature:
+  
+  The art of R programming, Normal Matlof, Starch Press
+  
+  Introductory Statistics with R, Peter Dalgaard, Springer
 
 
+## Starting simple
 ```{r start}
 1+1
 
@@ -112,15 +118,64 @@ mtrx[1:2] #Different!
 R can read all types of files (with or without required packages), such as txt, csv, xlsx (package: xlsx), sav spss file  (package: Hmisc)
 
 ```{r read}
-#read.table(" ")
+#Reading csv files (comma delimited)
+IrisCSV <- read.table("https://raw.githubusercontent.com/roderickslieker/Rintro/master/Iris.csv", sep=",", header=T)
+head(IrisCSV)
+str(IrisCSV)
 
+#Reading tab delimited 
+IrisTXT <- read.table("https://raw.githubusercontent.com/roderickslieker/Rintro/master/Iris.txt", sep="\t", header=T)
+head(IrisTXT)
+str(IrisTXT)
 ```
 
 
 
 
-#Plotting: mult
+## Packages
+
+Packages are an infinite rich source to facilitate your analysis
+
+*To install packages from CRAN*
+install.packages("ggplot2")
+
+*Or when from Bioconductor:*
+source("https://bioconductor.org/biocLite.R")
+biocLite("IRanges")
+
+
+
+
+## Plotting
+
+R base (without packages) can plot all kind of plots
+
+
 ```{r plotting}
+library(ggplot2)
+
+#Scatter plot
+plot(IrisCSV$Sepal.Length, IrisCSV$Sepal.Width, xlab="Sepal length", ylab="Sepal width")
+
+ggplot(IrisCSV, aes(x=Sepal.Length, y=Sepal.Width))+
+  geom_point()+
+  ggtitle("Some title")+
+  xlab("Sepal length")+
+  ylab("Sepal width")
+
+
+# Boxplot
+boxplot(IrisCSV$Sepal.Length~IrisCSV$Species, xlab="Sepal length", ylab="Sepal width")
+
+ggplot(IrisCSV, aes(x=Species, y=Sepal.Length, fill=Species))+
+  geom_boxplot()+
+  ggtitle("Some title")+
+  xlab("Sepal length")+
+  ylab("Sepal width")+
+  scale_fill_manual(values = c("#009AC7","#132B41","#8B1A4F"))
+
+
+
 
 ```
 

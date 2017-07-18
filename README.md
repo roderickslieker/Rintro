@@ -4,8 +4,12 @@ Introduction to R
 Where to get this page from:
 ----------------------------
 
-Beginning simple
-----------------
+<http://goo.gl/cWAAyv>
+
+content\_copyCopy short URL
+
+Introduction
+------------
 
 -   Originated from proprietary S programming language
 
@@ -20,6 +24,13 @@ Beginning simple
 -   Packages: for an (almost infinity) number of applications people have developed packages, for example Bioconductor: <http://bioconductor.org/>
 
 -   Suggested literature:
+
+The art of R programming, Normal Matlof, Starch Press
+
+Introductory Statistics with R, Peter Dalgaard, Springer
+
+Starting simple
+---------------
 
 ``` r
 1+1
@@ -190,8 +201,58 @@ Reading from files
 R can read all types of files (with or without required packages), such as txt, csv, xlsx (package: xlsx), sav spss file (package: Hmisc)
 
 ``` r
-#read.table(" ")
+#Reading csv files (comma delimited)
+IrisCSV <- read.table("https://raw.githubusercontent.com/roderickslieker/Rintro/master/Iris.csv", sep=",", header=T)
+head(IrisCSV)
 ```
+
+    ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+    ## 1          5.1         3.5          1.4         0.2  setosa
+    ## 2          4.9         3.0          1.4         0.2  setosa
+    ## 3          4.7         3.2          1.3         0.2  setosa
+    ## 4          4.6         3.1          1.5         0.2  setosa
+    ## 5          5.0         3.6          1.4         0.2  setosa
+    ## 6          5.4         3.9          1.7         0.4  setosa
+
+``` r
+str(IrisCSV)
+```
+
+    ## 'data.frame':    150 obs. of  5 variables:
+    ##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+    ##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+    ##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+    ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+    ##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+
+``` r
+#Reading tab delimited 
+IrisTXT <- read.table("https://raw.githubusercontent.com/roderickslieker/Rintro/master/Iris.txt", sep="\t", header=T)
+head(IrisTXT)
+```
+
+    ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+    ## 1          5.1         3.5          1.4         0.2  setosa
+    ## 2          4.9         3.0          1.4         0.2  setosa
+    ## 3          4.7         3.2          1.3         0.2  setosa
+    ## 4          4.6         3.1          1.5         0.2  setosa
+    ## 5          5.0         3.6          1.4         0.2  setosa
+    ## 6          5.4         3.9          1.7         0.4  setosa
+
+``` r
+str(IrisTXT)
+```
+
+    ## 'data.frame':    150 obs. of  5 variables:
+    ##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+    ##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+    ##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+    ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+    ##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 
 Plotting: mult
 ==============
+
+``` r
+library(ggplot2)
+```
