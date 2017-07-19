@@ -1,7 +1,7 @@
 Introduction to R
 ================
 
--   [1. Introduction](#introduction)
+-   [1.Introduction](#introduction)
     -   [The R interface](#the-r-interface)
     -   [Other software to be used with R](#other-software-to-be-used-with-r)
     -   [Suggested literature:](#suggested-literature)
@@ -18,10 +18,11 @@ Introduction to R
 -   [8.Plotting](#plotting)
     -   [Saving plots](#saving-plots)
 
-**Where to get this page from:** <http://goo.gl/cWAAyv>
+This page can be found at:
+<http://goo.gl/cWAAyv>
 
-1. Introduction
-===============
+1.Introduction
+==============
 
 The R interface
 ---------------

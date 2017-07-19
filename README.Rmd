@@ -6,14 +6,12 @@ output:
     toc_depth: 2 
 ---
 
-
-**Where to get this page from:**
+This page can be found at:  
 http://goo.gl/cWAAyv
 
+#1.Introduction#
 
-# 1. Introduction 
-
-## The R interface ##
+## The R interface##
 - Originated from proprietary S programming language
 
 - Comes in many flavours, like GUI (hardly a user interface), Rstudio, Eclipse
