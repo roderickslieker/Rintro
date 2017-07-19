@@ -24,7 +24,9 @@ The R interface
 Other software to be used with R
 --------------------------------
 
--   Rstudio is very useful: <https://www.rstudio.com/products/RStudio/> It has many advantages: integrated help, use of tab,
+-   Rstudio is very useful: <https://www.rstudio.com/products/RStudio/>
+
+It has many advantages: integrated help, use of tab key, more stable than Rgui.
 
 -   Sublime when only typing syntax (to link with servers): <https://www.sublimetext.com/>
 
@@ -74,12 +76,30 @@ b
 
     ## [1] 1 2 3
 
+``` r
+#Variables can have any names, but don't assign names to existing objects, such as sum, c, sd etc
+#Spaces are not allowed as well as special symbols
+
+
+#Sequences
+rep(x = 1,times = 5)
+```
+
+    ## [1] 1 1 1 1 1
+
+``` r
+seq(from = 1,to = 5,by=0.5)
+```
+
+    ## [1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
+
 The main classes
 ----------------
 
 -   Numeric and integers
 -   Characters
 -   Factors
+-   Lists
 
 ``` r
 #Numeric
@@ -105,6 +125,20 @@ class(factors)
 ```
 
     ## [1] "factor"
+
+``` r
+# List 
+list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
+```
+
+    ## $GroupA
+    ## [1] 1 2 3
+    ## 
+    ## $GroupB
+    ## [1] 2 3 4 5
+    ## 
+    ## $GroupC
+    ## [1] 3 4 5
 
 Objects
 -------
@@ -203,22 +237,17 @@ colnames(df)
 
 ``` r
 #What doesn't work:
-dim(mtrx)
-```
-
-    ## [1] 5 5
-
-``` r
 #rownames(mtrx) <- c("A","B","C")
 #Why not?
-
 ## Learn to understand error codes (read them carefully)
-
 ## If you don't get the error, google it. There is ALWAYS someone before you who had the same question.
-
-
 ## This does work. Why?
 rownames(mtrx) <- c("A","B","C","D","E")
+
+
+
+
+#Modifying objects
 
 #Data.frame
 df[1:2, ] #First two lines
@@ -229,7 +258,35 @@ df[1:2, ] #First two lines
     ## B     2       3
 
 ``` r
-#Add column
+#Different (order has changed!)
+df[2:1, ] 
+```
+
+    ##   Group Outcome
+    ## B     2       3
+    ## A     1       2
+
+``` r
+#You can also subset by rownames
+df[c("A","B"),]
+```
+
+    ##   Group Outcome
+    ## A     1       2
+    ## B     2       3
+
+``` r
+#Or colnames
+df[,c("Group","Outcome")]
+```
+
+    ##   Group Outcome
+    ## A     1       2
+    ## B     2       3
+    ## C     3       6
+
+``` r
+#Add new columns
 df$NewCol <- c(1,2,5)
 head(df)
 ```
@@ -240,7 +297,7 @@ head(df)
     ## C     3       6      5
 
 ``` r
-#Matrix:
+# Modifying a matrix:
 mtrx[1:2,]
 ```
 
@@ -253,20 +310,6 @@ mtrx[1:2] #Different!
 ```
 
     ## [1] 1 2
-
-``` r
-# List 
-list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
-```
-
-    ## $GroupA
-    ## [1] 1 2 3
-    ## 
-    ## $GroupB
-    ## [1] 2 3 4 5
-    ## 
-    ## $GroupC
-    ## [1] 3 4 5
 
 Reading from files
 ------------------
@@ -336,38 +379,81 @@ Summary statistics
 There are various ways of calcalating summary statistics. A useful function is **by**.
 
 ``` r
-# Means
-# by(data = someVariable, INDICES = someGrouping, FUN = aGroupingFunction)
+#The iris dataset is a build in dataset
+data(iris)
 
-by(data = IrisCSV$Sepal.Length, INDICES = IrisCSV$Species, mean)
+#Describe dataset
+nrow(iris)
 ```
 
-    ## IrisCSV$Species: setosa
+    ## [1] 150
+
+``` r
+ncol(iris)
+```
+
+    ## [1] 5
+
+``` r
+length(iris$Sepal.Length)
+```
+
+    ## [1] 150
+
+``` r
+sum(iris$Sepal.Length)
+```
+
+    ## [1] 876.5
+
+``` r
+mean(iris$Sepal.Length)
+```
+
+    ## [1] 5.843333
+
+``` r
+sd(iris$Sepal.Length)
+```
+
+    ## [1] 0.8280661
+
+``` r
+# Summary statistics by group
+# by(data = someVariable, INDICES = someGrouping, FUN = aGroupingFunction)
+
+by(data = iris$Sepal.Length, INDICES = iris$Species, mean)
+```
+
+    ## iris$Species: setosa
     ## [1] 5.006
     ## -------------------------------------------------------- 
-    ## IrisCSV$Species: versicolor
+    ## iris$Species: versicolor
     ## [1] 5.936
     ## -------------------------------------------------------- 
-    ## IrisCSV$Species: virginica
+    ## iris$Species: virginica
     ## [1] 6.588
 
 ``` r
 # Same as:
-by(IrisCSV$Sepal.Length, IrisCSV$Species, mean)
+by(iris$Sepal.Length, iris$Species, mean)
 ```
 
-    ## IrisCSV$Species: setosa
+    ## iris$Species: setosa
     ## [1] 5.006
     ## -------------------------------------------------------- 
-    ## IrisCSV$Species: versicolor
+    ## iris$Species: versicolor
     ## [1] 5.936
     ## -------------------------------------------------------- 
-    ## IrisCSV$Species: virginica
+    ## iris$Species: virginica
     ## [1] 6.588
 
 ``` r
 #Store in variable
-meanGroup <- by(data = IrisCSV$Sepal.Length, INDICES = IrisCSV$Species, mean)
+meanGroup <- by(data = iris$Sepal.Length, INDICES = iris$Species, FUN = mean)
+SDGroup <- by(data = iris$Sepal.Length, INDICES = iris$Species, FUN = sd)
+LengthGroup <- by(data = iris$Sepal.Length, INDICES = iris$Species, FUN = length)
+
 class(meanGroup)
 ```
 
@@ -386,6 +472,17 @@ as.list(meanGroup)
     ## 
     ## $virginica
     ## [1] 6.588
+
+``` r
+statistics <- cbind( as.list(meanGroup),as.list(SDGroup), as.list(LengthGroup))
+colnames(statistics) <- c("Mean","SD","n")
+statistics
+```
+
+    ##            Mean  SD        n 
+    ## setosa     5.006 0.3524897 50
+    ## versicolor 5.936 0.5161711 50
+    ## virginica  6.588 0.6358796 50
 
 Packages
 --------
