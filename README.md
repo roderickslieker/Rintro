@@ -1,6 +1,6 @@
 Introduction to R
 ================
-R.Slieker
+r.slieker at vumc.nl
 
 Where to get this page from:
 ----------------------------
@@ -10,8 +10,8 @@ Where to get this page from:
 Introduction
 ------------
 
-The R interface
----------------
+1) The R interface
+------------------
 
 -   Originated from proprietary S programming language
 
@@ -19,10 +19,12 @@ The R interface
 
 -   Save scripts as R files, can be opened with all kinds of software (R, Rstudio, sublime, Notepad etc. )
 
+-   Safer and more reproducible than other software: source data is not changed, scripts can be shared with others
+
 -   Save objects to Rdata files, so you can continue with it next time without the need for rerunning the complete script
 
-Other software to be used with R
---------------------------------
+2) Other software to be used with R
+-----------------------------------
 
 -   Rstudio is very useful: <https://www.rstudio.com/products/RStudio/>
 
@@ -37,12 +39,14 @@ It has many advantages: integrated help, use of tab key, more stable than Rgui.
 Suggested literature:
 ---------------------
 
+*Google is your best friend. Every question has been asked more than once by someone else*
+
 *The art of R programming, Normal Matlof, Starch Press*
 
 *Introductory Statistics with R, Peter Dalgaard, Springer*
 
-Starting simple with R
-----------------------
+3. Starting simple with R
+-------------------------
 
 ``` r
 1+1
@@ -93,8 +97,28 @@ seq(from = 1,to = 5,by=0.5)
 
     ## [1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
 
-The main classes
-----------------
+``` r
+seq(from = 1,to = 5,length.out = 100)
+```
+
+    ##   [1] 1.000000 1.040404 1.080808 1.121212 1.161616 1.202020 1.242424
+    ##   [8] 1.282828 1.323232 1.363636 1.404040 1.444444 1.484848 1.525253
+    ##  [15] 1.565657 1.606061 1.646465 1.686869 1.727273 1.767677 1.808081
+    ##  [22] 1.848485 1.888889 1.929293 1.969697 2.010101 2.050505 2.090909
+    ##  [29] 2.131313 2.171717 2.212121 2.252525 2.292929 2.333333 2.373737
+    ##  [36] 2.414141 2.454545 2.494949 2.535354 2.575758 2.616162 2.656566
+    ##  [43] 2.696970 2.737374 2.777778 2.818182 2.858586 2.898990 2.939394
+    ##  [50] 2.979798 3.020202 3.060606 3.101010 3.141414 3.181818 3.222222
+    ##  [57] 3.262626 3.303030 3.343434 3.383838 3.424242 3.464646 3.505051
+    ##  [64] 3.545455 3.585859 3.626263 3.666667 3.707071 3.747475 3.787879
+    ##  [71] 3.828283 3.868687 3.909091 3.949495 3.989899 4.030303 4.070707
+    ##  [78] 4.111111 4.151515 4.191919 4.232323 4.272727 4.313131 4.353535
+    ##  [85] 4.393939 4.434343 4.474747 4.515152 4.555556 4.595960 4.636364
+    ##  [92] 4.676768 4.717172 4.757576 4.797980 4.838384 4.878788 4.919192
+    ##  [99] 4.959596 5.000000
+
+4. The main classes
+-------------------
 
 -   Numeric and integers
 -   Characters
@@ -140,8 +164,8 @@ list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
     ## $GroupC
     ## [1] 3 4 5
 
-Objects
--------
+5. Objects
+----------
 
 -   Data frames
 
@@ -223,8 +247,8 @@ mtrx*mtrx
     ## [4,]   16   81  196  361  576
     ## [5,]   25  100  225  400  625
 
-Modifying objects
------------------
+6. Modifying objects
+--------------------
 
 ``` r
 #Adding rownames to files 
@@ -311,8 +335,8 @@ mtrx[1:2] #Different!
 
     ## [1] 1 2
 
-Reading from files
-------------------
+7. Reading from files
+---------------------
 
 R can read all types of files (with or without required packages), such as txt, csv, xlsx (package: xlsx), sav spss file (package: Hmisc)
 
@@ -373,14 +397,27 @@ str(IrisTXT)
     ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
     ##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 
-Summary statistics
-------------------
+8. Save to files
+----------------
 
-There are various ways of calcalating summary statistics. A useful function is **by**.
+``` r
+data(iris)
+
+# Save objects in analysis
+save(iris, file="Iris.RData")
+# Load objects from previous sessions
+load("Iris.RData")
+
+#One can also save to common formats such as csv, txt
+write.table(iris, file="Iris as text file.txt", sep="\t", col.names=T, row.names=F)
+write.table(iris, file="Iris as csv file.csv", sep=";", col.names=T, row.names=F)
+```
+
+9. Describing data using descriptive statistics
+-----------------------------------------------
 
 ``` r
 #The iris dataset is a build in dataset
-data(iris)
 
 #Describe dataset
 nrow(iris)
@@ -411,6 +448,12 @@ mean(iris$Sepal.Length)
 ```
 
     ## [1] 5.843333
+
+``` r
+median(iris$Sepal.Length)
+```
+
+    ## [1] 5.8
 
 ``` r
 sd(iris$Sepal.Length)
@@ -502,23 +545,25 @@ biocLite("IRanges")
 Plotting
 --------
 
-R base (without packages) can plot all kind of plots
+R base (without packages) can plot all kind of plots but are not very nice.
+
+ggplot2 is a very commonly used package for plotting. Although the approach is a bit different, the plots are nicer and more flexible to change. For more help see: <http://ggplot2.tidyverse.org/reference/> or google!
 
 ``` r
 library(ggplot2)
 
 #Scatter plot
-plot(IrisCSV$Sepal.Length, IrisCSV$Sepal.Width, xlab="Sepal length", ylab="Sepal width")
+plot(iris$Sepal.Length, iris$Sepal.Width, xlab="Sepal length", ylab="Sepal width")
 ```
 
 ![](README_files/figure-markdown_github-ascii_identifiers/plotting-1.png)
 
 ``` r
-ggplot(IrisCSV, aes(x=Sepal.Length, y=Sepal.Width, col=Species))+
-  geom_point()+
-  ggtitle("Some title")+
-  xlab("Sepal length")+
-  ylab("Sepal width")+
+ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width, col=Species))+ # Define variables
+  geom_point()+ # We want to plot dots
+  ggtitle("Some title")+ #Add title to graph
+  xlab("Sepal length")+ #Add x-axis labels
+  ylab("Sepal width")+ #Add y-axis labels
   scale_color_manual(values = c("#009AC7","#132B41","#8B1A4F"))
 ```
 
@@ -526,13 +571,13 @@ ggplot(IrisCSV, aes(x=Sepal.Length, y=Sepal.Width, col=Species))+
 
 ``` r
 # Boxplot
-boxplot(IrisCSV$Sepal.Length~IrisCSV$Species, xlab="Sepal length", ylab="Sepal width")
+boxplot(iris$Sepal.Length~IrisCSV$Species, xlab="Sepal length", ylab="Sepal width")
 ```
 
 ![](README_files/figure-markdown_github-ascii_identifiers/plotting-3.png)
 
 ``` r
-ggplot(IrisCSV, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
+ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
   geom_boxplot()+ #What kind of graph?
   ggtitle("Some title")+ #Add title to graph
   xlab("Sepal length")+ #Add x-axis labels
@@ -541,6 +586,18 @@ ggplot(IrisCSV, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
 ```
 
 ![](README_files/figure-markdown_github-ascii_identifiers/plotting-4.png)
+
+``` r
+# Jitter plot
+ggplot(iris, aes(x=Species, y=Sepal.Length, col=Species))+ #Define variables
+  geom_jitter(width=0.2)+
+  ggtitle("Some title")+ 
+  xlab("Sepal length")+ 
+  ylab("Sepal width")+ 
+  scale_colour_manual(values = c("#009AC7","#132B41","#8B1A4F")) 
+```
+
+![](README_files/figure-markdown_github-ascii_identifiers/plotting-5.png)
 
 ``` r
 # Smoothed line graph
@@ -553,10 +610,10 @@ ggplot(IrisCSV, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
   scale_color_manual(values = c("#009AC7","#132B41","#8B1A4F"))
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/plotting-5.png)
+![](README_files/figure-markdown_github-ascii_identifiers/plotting-6.png)
 
 ``` r
-ggplot(IrisCSV, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
   geom_point()+
   geom_smooth(method=loess)+
   ggtitle("Some title")+
@@ -565,4 +622,20 @@ ggplot(IrisCSV, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
   scale_color_manual(values = c("#009AC7","#132B41","#8B1A4F"))
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/plotting-6.png)
+![](README_files/figure-markdown_github-ascii_identifiers/plotting-7.png)
+
+``` r
+library(ggplot2)
+
+pdf("Boxplot of iris data.pdf")
+ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
+  geom_boxplot()+ #What kind of graph?
+  ggtitle("Some title")+ #Add title to graph
+  xlab("Sepal length")+ #Add x-axis labels
+  ylab("Sepal width")+ #Add y-axis labels
+  scale_fill_manual(values = c("#009AC7","#132B41","#8B1A4F")) # Change colors using HEX colors
+dev.off()
+```
+
+    ## quartz_off_screen 
+    ##                 2

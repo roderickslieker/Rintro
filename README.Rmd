@@ -1,8 +1,7 @@
 ---
 title: "Introduction to R"
-author: R.Slieker
+author: r.slieker at vumc.nl
 output: github_document
-email: r.slieker at vumc.nl
 ---
 
 
@@ -13,16 +12,19 @@ http://goo.gl/cWAAyv
 ## Introduction
 
 
-## The R interface
+## 1) The R interface
 - Originated from proprietary S programming language
 
 - Comes in many flavours, like GUI (hardly a user interface), Rstudio, Eclipse
 
 - Save scripts as R files, can be opened with all kinds of software (R, Rstudio, sublime, Notepad etc. )
 
+- Safer and more reproducible than other software: source data is not changed, scripts can be shared with others
+
 - Save objects to Rdata files, so you can continue with it next time without the need for rerunning the complete script
 
-## Other software to be used with R
+
+## 2) Other software to be used with R
 
 - Rstudio is very useful: https://www.rstudio.com/products/RStudio/
 
@@ -37,13 +39,15 @@ It has many advantages: integrated help, use of tab key, more stable than Rgui.
 
 ## Suggested literature:
   
+*Google is your best friend. Every question has been asked more than once by someone else*
+
 *The art of R programming, Normal Matlof, Starch Press*
 
 *Introductory Statistics with R, Peter Dalgaard, Springer*
 
 
 
-## Starting simple with R
+## 3. Starting simple with R
 
 ```{r start}
 1+1
@@ -68,12 +72,12 @@ b
 #Sequences
 rep(x = 1,times = 5)
 seq(from = 1,to = 5,by=0.5)
-
+seq(from = 1,to = 5,length.out = 100)
 ```
 
 
 
-## The main classes
+## 4. The main classes
 - Numeric and integers
 - Characters
 - Factors
@@ -98,7 +102,7 @@ class(factors)
 list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
 ```
 
-## Objects
+## 5. Objects
 - Data frames
   
   Advantages: can hold multiple classes, columns can be viewed easily
@@ -134,7 +138,7 @@ class(mtrx)
 mtrx*mtrx
 ```
 
-## Modifying objects
+## 6. Modifying objects
 
 ```{r modifying}
 #Adding rownames to files 
@@ -177,7 +181,7 @@ mtrx[1:2,]
 mtrx[1:2] #Different!
 ```
 
-## Reading from files
+## 7. Reading from files
 
 R can read all types of files (with or without required packages), such as txt, csv, xlsx (package: xlsx), sav spss file  (package: Hmisc)
 
@@ -200,13 +204,25 @@ head(IrisTXT)
 str(IrisTXT)
 ```
 
-## Summary statistics 
+## 8. Save to files
 
-There are various ways of calcalating summary statistics. A useful function is **by**.
+```{r save}
+data(iris)
+
+# Save objects in analysis
+save(iris, file="Iris.RData")
+# Load objects from previous sessions
+load("Iris.RData")
+
+#One can also save to common formats such as csv, txt
+write.table(iris, file="Iris as text file.txt", sep="\t", col.names=T, row.names=F)
+write.table(iris, file="Iris as csv file.csv", sep=";", col.names=T, row.names=F)
+```
+
+## 9. Describing data using descriptive statistics
 
 ```{r summaries}
 #The iris dataset is a build in dataset
-data(iris)
 
 #Describe dataset
 nrow(iris)
@@ -214,6 +230,7 @@ ncol(iris)
 length(iris$Sepal.Length)
 sum(iris$Sepal.Length)
 mean(iris$Sepal.Length)
+median(iris$Sepal.Length)
 sd(iris$Sepal.Length)
 
 # Summary statistics by group
@@ -253,33 +270,42 @@ biocLite("IRanges")
 
 
 ## Plotting
-R base (without packages) can plot all kind of plots
+R base (without packages) can plot all kind of plots but are not very nice. 
+
+ggplot2 is a very commonly used package for plotting. Although the approach is a bit different, the plots are nicer and more flexible to change. For more help see: http://ggplot2.tidyverse.org/reference/ or google!
 
 
 ```{r plotting}
 library(ggplot2)
 
 #Scatter plot
-plot(IrisCSV$Sepal.Length, IrisCSV$Sepal.Width, xlab="Sepal length", ylab="Sepal width")
+plot(iris$Sepal.Length, iris$Sepal.Width, xlab="Sepal length", ylab="Sepal width")
 
-ggplot(IrisCSV, aes(x=Sepal.Length, y=Sepal.Width, col=Species))+
-  geom_point()+
-  ggtitle("Some title")+
-  xlab("Sepal length")+
-  ylab("Sepal width")+
+ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width, col=Species))+ # Define variables
+  geom_point()+ # We want to plot dots
+  ggtitle("Some title")+ #Add title to graph
+  xlab("Sepal length")+ #Add x-axis labels
+  ylab("Sepal width")+ #Add y-axis labels
   scale_color_manual(values = c("#009AC7","#132B41","#8B1A4F"))
-  
 
 
 # Boxplot
-boxplot(IrisCSV$Sepal.Length~IrisCSV$Species, xlab="Sepal length", ylab="Sepal width")
+boxplot(iris$Sepal.Length~IrisCSV$Species, xlab="Sepal length", ylab="Sepal width")
 
-ggplot(IrisCSV, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
+ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
   geom_boxplot()+ #What kind of graph?
   ggtitle("Some title")+ #Add title to graph
   xlab("Sepal length")+ #Add x-axis labels
   ylab("Sepal width")+ #Add y-axis labels
   scale_fill_manual(values = c("#009AC7","#132B41","#8B1A4F")) # Change colors using HEX colors
+
+# Jitter plot
+ggplot(iris, aes(x=Species, y=Sepal.Length, col=Species))+ #Define variables
+  geom_jitter(width=0.2)+
+  ggtitle("Some title")+ 
+  xlab("Sepal length")+ 
+  ylab("Sepal width")+ 
+  scale_colour_manual(values = c("#009AC7","#132B41","#8B1A4F")) 
 
 # Smoothed line graph
 ggplot(IrisCSV, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
@@ -290,7 +316,7 @@ ggplot(IrisCSV, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
   ylab("Sepal width")+
   scale_color_manual(values = c("#009AC7","#132B41","#8B1A4F"))
 
-ggplot(IrisCSV, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
   geom_point()+
   geom_smooth(method=loess)+
   ggtitle("Some title")+
@@ -300,8 +326,19 @@ ggplot(IrisCSV, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
 
 ```
 
+```{r savingplots}
+library(ggplot2)
 
+pdf("Boxplot of iris data.pdf")
+ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
+  geom_boxplot()+ #What kind of graph?
+  ggtitle("Some title")+ #Add title to graph
+  xlab("Sepal length")+ #Add x-axis labels
+  ylab("Sepal width")+ #Add y-axis labels
+  scale_fill_manual(values = c("#009AC7","#132B41","#8B1A4F")) # Change colors using HEX colors
+dev.off()
 
+```
 
 
 
