@@ -9,9 +9,9 @@ output:
 This page can be found at:  
 http://goo.gl/cWAAyv
 
-#1.Introduction#
+# 1.Introduction #
 
-## The R interface##
+## The R interface ##
 - Originated from proprietary S programming language
 
 - Comes in many flavours, like GUI (hardly a user interface), Rstudio, Eclipse
@@ -23,7 +23,7 @@ http://goo.gl/cWAAyv
 - Save objects to Rdata files, so you can continue with it next time without the need for rerunning the complete script
 
 
-##Other software to be used with R ##
+## Other software to be used with R ##
 
 - Rstudio is very useful: https://www.rstudio.com/products/RStudio/
 
@@ -36,7 +36,7 @@ It has many advantages: integrated help, use of tab key, more stable than Rgui.
 - Git to track your code: https://git.lumc.nl 
 
 
-## Suggested literature:##
+## Suggested literature ##
   
 *Google is your best friend. Every question has been asked more than once by someone else*
 
@@ -44,7 +44,7 @@ It has many advantages: integrated help, use of tab key, more stable than Rgui.
 
 *Introductory Statistics with R, Peter Dalgaard, Springer*
 
-#2. Starting simple with R#
+# 2. Starting simple with R #
 
 ```{r start}
 1+1
@@ -72,9 +72,7 @@ seq(from = 1,to = 5,by=0.5)
 seq(from = 1,to = 5,length.out = 100)
 ```
 
-
-
-#3. The main classes
+# 3. The main classes #
 - Numeric and integers
 - Characters
 - Factors
@@ -99,9 +97,9 @@ class(factors)
 list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
 ```
 
-#4. Objects 
+# 4. Objects #
 
-##Creating objects##
+## Creating objects ##
 
 - Data frames
   
@@ -138,7 +136,7 @@ class(mtrx)
 mtrx*mtrx
 ```
 
-##Modifying objects##
+## Modifying objects ##
 
 ```{r modifying}
 #Adding rownames to files 
@@ -181,9 +179,9 @@ mtrx[1:2,]
 mtrx[1:2] #Different!
 ```
 
-#5. Loading and saving from R
+# 5. Loading and saving from R #
 
-##Reading from files##
+## Reading from files ##
 
 R can read all types of files (with or without required packages), such as txt, csv, xlsx (package: xlsx), sav spss file  (package: Hmisc)
 
@@ -206,7 +204,7 @@ head(IrisTXT)
 str(IrisTXT)
 ```
 
-##Save to files##
+## Save to files ##
 
 ```{r save}
 data(iris)
@@ -221,7 +219,7 @@ write.table(iris, file="Iris as text file.txt", sep="\t", col.names=T, row.names
 write.table(iris, file="Iris as csv file.csv", sep=";", col.names=T, row.names=F)
 ```
 
-#6. Describing data using descriptive statistics
+# 6. Describing data using descriptive statistics #
 
 ```{r summaries}
 #The iris dataset is a build in dataset
@@ -256,7 +254,7 @@ statistics
 ```
 
 
-#7.Packages
+# 7.Packages #
 
 Packages are an infinite rich source to facilitate your analysis
 
@@ -328,7 +326,7 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
 
 ```
 
-##Saving plots##
+## Saving plots ##
 ```{r savingplots}
 library(ggplot2)
 

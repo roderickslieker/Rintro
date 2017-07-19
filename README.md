@@ -4,7 +4,7 @@ Introduction to R
 -   [1.Introduction](#introduction)
     -   [The R interface](#the-r-interface)
     -   [Other software to be used with R](#other-software-to-be-used-with-r)
-    -   [Suggested literature:](#suggested-literature)
+    -   [Suggested literature](#suggested-literature)
 -   [2. Starting simple with R](#starting-simple-with-r)
 -   [3. The main classes](#the-main-classes)
 -   [4. Objects](#objects)
@@ -50,8 +50,8 @@ It has many advantages: integrated help, use of tab key, more stable than Rgui.
 
 -   Git to track your code: <https://git.lumc.nl>
 
-Suggested literature:
----------------------
+Suggested literature
+--------------------
 
 *Google is your best friend. Every question has been asked more than once by someone else*
 
