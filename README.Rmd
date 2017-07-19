@@ -12,6 +12,7 @@ http://goo.gl/cWAAyv
 # 1.Introduction #
 
 ## The R interface ##
+
 - Originated from proprietary S programming language
 
 - Comes in many flavours, like GUI (hardly a user interface), Rstudio, Eclipse
@@ -21,7 +22,6 @@ http://goo.gl/cWAAyv
 - Safer and more reproducible than other software: source data is not changed, scripts can be shared with others
 
 - Save objects to Rdata files, so you can continue with it next time without the need for rerunning the complete script
-
 
 ## Other software to be used with R ##
 
@@ -35,14 +35,13 @@ It has many advantages: integrated help, use of tab key, more stable than Rgui.
 
 - Git to track your code: https://git.lumc.nl 
 
-
 ## Suggested literature ##
   
 Google is your best friend. Every question has been asked more than once by someone else!
 
-The art of R programming, Normal Matlof, Starch Press
+*The art of R programming, Normal Matlof, Starch Press*
 
-Introductory Statistics with R, Peter Dalgaard, Springer
+*Introductory Statistics with R, Peter Dalgaard, Springer*
 
 # 2. Starting simple with R #
 
@@ -73,6 +72,7 @@ seq(from = 1,to = 5,length.out = 100)
 ```
 
 # 3. The main classes #
+
 - Numeric and integers
 - Characters
 - Factors
