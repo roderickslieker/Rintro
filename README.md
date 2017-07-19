@@ -1,28 +1,28 @@
 Introduction to R
 ================
 
--   [1.Introduction](#introduction)
+-   [Introduction](#introduction)
     -   [The R interface](#the-r-interface)
     -   [Other software to be used with R](#other-software-to-be-used-with-r)
     -   [Suggested literature](#suggested-literature)
 -   [Starting simple with R](#starting-simple-with-r)
--   [3. The main classes](#the-main-classes)
--   [4. Objects](#objects)
+-   [The main classes](#the-main-classes)
+-   [Objects](#objects)
     -   [Creating objects](#creating-objects)
     -   [Modifying objects](#modifying-objects)
--   [5. Loading and saving from R](#loading-and-saving-from-r)
+-   [Loading and saving from R](#loading-and-saving-from-r)
     -   [Reading from files](#reading-from-files)
     -   [Save to files](#save-to-files)
--   [6. Describing data using descriptive statistics](#describing-data-using-descriptive-statistics)
--   [7.Packages](#packages)
+-   [Describing data using descriptive statistics](#describing-data-using-descriptive-statistics)
+-   [Packages](#packages)
 -   [8.Plotting](#plotting)
     -   [Saving plots](#saving-plots)
 
 This page can be found at:
 <http://goo.gl/cWAAyv>
 
-1.Introduction
-==============
+Introduction
+============
 
 The R interface
 ---------------
@@ -131,8 +131,8 @@ seq(from = 1,to = 5,length.out = 100)
     ##  [92] 4.676768 4.717172 4.757576 4.797980 4.838384 4.878788 4.919192
     ##  [99] 4.959596 5.000000
 
-3. The main classes
-===================
+The main classes
+================
 
 -   Numeric and integers
 -   Characters
@@ -178,8 +178,8 @@ list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
     ## $GroupC
     ## [1] 3 4 5
 
-4. Objects
-==========
+Objects
+=======
 
 Creating objects
 ----------------
@@ -352,8 +352,8 @@ mtrx[1:2] #Different!
 
     ## [1] 1 2
 
-5. Loading and saving from R
-============================
+Loading and saving from R
+=========================
 
 Reading from files
 ------------------
@@ -433,8 +433,8 @@ write.table(iris, file="Iris as text file.txt", sep="\t", col.names=T, row.names
 write.table(iris, file="Iris as csv file.csv", sep=";", col.names=T, row.names=F)
 ```
 
-6. Describing data using descriptive statistics
-===============================================
+Describing data using descriptive statistics
+============================================
 
 ``` r
 #The iris dataset is a build in dataset
@@ -547,8 +547,8 @@ statistics
     ## versicolor 5.936 0.5161711 50
     ## virginica  6.588 0.6358796 50
 
-7.Packages
-==========
+Packages
+========
 
 Packages are an infinite rich source to facilitate your analysis
 
