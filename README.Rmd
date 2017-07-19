@@ -1,18 +1,20 @@
 ---
 title: "Introduction to R"
-author: r.slieker at vumc.nl
-output: github_document
+output:
+  github_document:
+    toc: true
+    toc_depth: 2 
 ---
 
 
-## Where to get this page from: 
+**Where to get this page from:**
 http://goo.gl/cWAAyv
 
 
-## Introduction
+# 1. Introduction #
 
 
-## 1) The R interface
+## The R interface ##
 - Originated from proprietary S programming language
 
 - Comes in many flavours, like GUI (hardly a user interface), Rstudio, Eclipse
@@ -24,7 +26,7 @@ http://goo.gl/cWAAyv
 - Save objects to Rdata files, so you can continue with it next time without the need for rerunning the complete script
 
 
-## 2) Other software to be used with R
+##Other software to be used with R ##
 
 - Rstudio is very useful: https://www.rstudio.com/products/RStudio/
 
@@ -37,7 +39,7 @@ It has many advantages: integrated help, use of tab key, more stable than Rgui.
 - Git to track your code: https://git.lumc.nl 
 
 
-## Suggested literature:
+## Suggested literature:##
   
 *Google is your best friend. Every question has been asked more than once by someone else*
 
@@ -47,7 +49,7 @@ It has many advantages: integrated help, use of tab key, more stable than Rgui.
 
 
 
-## 3. Starting simple with R
+# 2. Starting simple with R#
 
 ```{r start}
 1+1
@@ -77,7 +79,7 @@ seq(from = 1,to = 5,length.out = 100)
 
 
 
-## 4. The main classes
+#3. The main classes#
 - Numeric and integers
 - Characters
 - Factors
@@ -102,7 +104,10 @@ class(factors)
 list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
 ```
 
-## 5. Objects
+# 4. Objects #
+
+##Creating objects##
+
 - Data frames
   
   Advantages: can hold multiple classes, columns can be viewed easily
@@ -138,7 +143,7 @@ class(mtrx)
 mtrx*mtrx
 ```
 
-## 6. Modifying objects
+##Modifying objects##
 
 ```{r modifying}
 #Adding rownames to files 
@@ -181,7 +186,9 @@ mtrx[1:2,]
 mtrx[1:2] #Different!
 ```
 
-## 7. Reading from files
+#5. Loading and saving from R#
+
+##Reading from files##
 
 R can read all types of files (with or without required packages), such as txt, csv, xlsx (package: xlsx), sav spss file  (package: Hmisc)
 
@@ -204,7 +211,7 @@ head(IrisTXT)
 str(IrisTXT)
 ```
 
-## 8. Save to files
+##Save to files##
 
 ```{r save}
 data(iris)
@@ -219,7 +226,7 @@ write.table(iris, file="Iris as text file.txt", sep="\t", col.names=T, row.names
 write.table(iris, file="Iris as csv file.csv", sep=";", col.names=T, row.names=F)
 ```
 
-## 9. Describing data using descriptive statistics
+#6. Describing data using descriptive statistics#
 
 ```{r summaries}
 #The iris dataset is a build in dataset
@@ -254,7 +261,7 @@ statistics
 ```
 
 
-## Packages
+#7.Packages#
 
 Packages are an infinite rich source to facilitate your analysis
 
@@ -269,7 +276,7 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("IRanges")
 
 
-## Plotting
+#8.Plotting#
 R base (without packages) can plot all kind of plots but are not very nice. 
 
 ggplot2 is a very commonly used package for plotting. Although the approach is a bit different, the plots are nicer and more flexible to change. For more help see: http://ggplot2.tidyverse.org/reference/ or google!
@@ -326,10 +333,20 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
 
 ```
 
+##Saving plots##
 ```{r savingplots}
 library(ggplot2)
 
 pdf("Boxplot of iris data.pdf")
+ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
+  geom_boxplot()+ #What kind of graph?
+  ggtitle("Some title")+ #Add title to graph
+  xlab("Sepal length")+ #Add x-axis labels
+  ylab("Sepal width")+ #Add y-axis labels
+  scale_fill_manual(values = c("#009AC7","#132B41","#8B1A4F")) # Change colors using HEX colors
+dev.off()
+
+jpeg("Boxplot of iris data.jpg", width = 10, height = 10, units="cm", res=200)
 ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
   geom_boxplot()+ #What kind of graph?
   ggtitle("Some title")+ #Add title to graph

@@ -1,17 +1,30 @@
 Introduction to R
 ================
-r.slieker at vumc.nl
 
-Where to get this page from:
-----------------------------
+-   [1. Introduction](#introduction)
+    -   [The R interface](#the-r-interface)
+    -   [Other software to be used with R](#other-software-to-be-used-with-r)
+    -   [Suggested literature:](#suggested-literature)
+-   [2. Starting simple with R](#starting-simple-with-r)
+-   [3. The main classes](#the-main-classes)
+-   [4. Objects](#objects)
+    -   [Creating objects](#creating-objects)
+    -   [Modifying objects](#modifying-objects)
+-   [5. Loading and saving from R](#loading-and-saving-from-r)
+    -   [Reading from files](#reading-from-files)
+    -   [Save to files](#save-to-files)
+-   [6. Describing data using descriptive statistics](#describing-data-using-descriptive-statistics)
+-   [7.Packages](#packages)
+-   [8.Plotting](#plotting)
+    -   [Saving plots](#saving-plots)
 
-<http://goo.gl/cWAAyv>
+**Where to get this page from:** <http://goo.gl/cWAAyv>
 
-Introduction
-------------
+1. Introduction
+===============
 
-1) The R interface
-------------------
+The R interface
+---------------
 
 -   Originated from proprietary S programming language
 
@@ -23,8 +36,8 @@ Introduction
 
 -   Save objects to Rdata files, so you can continue with it next time without the need for rerunning the complete script
 
-2) Other software to be used with R
------------------------------------
+Other software to be used with R
+--------------------------------
 
 -   Rstudio is very useful: <https://www.rstudio.com/products/RStudio/>
 
@@ -45,8 +58,8 @@ Suggested literature:
 
 *Introductory Statistics with R, Peter Dalgaard, Springer*
 
-3. Starting simple with R
--------------------------
+2. Starting simple with R
+=========================
 
 ``` r
 1+1
@@ -117,8 +130,8 @@ seq(from = 1,to = 5,length.out = 100)
     ##  [92] 4.676768 4.717172 4.757576 4.797980 4.838384 4.878788 4.919192
     ##  [99] 4.959596 5.000000
 
-4. The main classes
--------------------
+3. The main classes
+===================
 
 -   Numeric and integers
 -   Characters
@@ -164,8 +177,11 @@ list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
     ## $GroupC
     ## [1] 3 4 5
 
-5. Objects
-----------
+4. Objects
+==========
+
+Creating objects
+----------------
 
 -   Data frames
 
@@ -247,8 +263,8 @@ mtrx*mtrx
     ## [4,]   16   81  196  361  576
     ## [5,]   25  100  225  400  625
 
-6. Modifying objects
---------------------
+Modifying objects
+-----------------
 
 ``` r
 #Adding rownames to files 
@@ -335,8 +351,11 @@ mtrx[1:2] #Different!
 
     ## [1] 1 2
 
-7. Reading from files
----------------------
+5. Loading and saving from R
+============================
+
+Reading from files
+------------------
 
 R can read all types of files (with or without required packages), such as txt, csv, xlsx (package: xlsx), sav spss file (package: Hmisc)
 
@@ -397,8 +416,8 @@ str(IrisTXT)
     ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
     ##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 
-8. Save to files
-----------------
+Save to files
+-------------
 
 ``` r
 data(iris)
@@ -413,8 +432,8 @@ write.table(iris, file="Iris as text file.txt", sep="\t", col.names=T, row.names
 write.table(iris, file="Iris as csv file.csv", sep=";", col.names=T, row.names=F)
 ```
 
-9. Describing data using descriptive statistics
------------------------------------------------
+6. Describing data using descriptive statistics
+===============================================
 
 ``` r
 #The iris dataset is a build in dataset
@@ -527,8 +546,8 @@ statistics
     ## versicolor 5.936 0.5161711 50
     ## virginica  6.588 0.6358796 50
 
-Packages
---------
+7.Packages
+==========
 
 Packages are an infinite rich source to facilitate your analysis
 
@@ -542,8 +561,8 @@ source("<https://bioconductor.org/biocLite.R>")
 
 biocLite("IRanges")
 
-Plotting
---------
+8.Plotting
+==========
 
 R base (without packages) can plot all kind of plots but are not very nice.
 
@@ -624,10 +643,27 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
 
 ![](README_files/figure-markdown_github-ascii_identifiers/plotting-7.png)
 
+Saving plots
+------------
+
 ``` r
 library(ggplot2)
 
 pdf("Boxplot of iris data.pdf")
+ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
+  geom_boxplot()+ #What kind of graph?
+  ggtitle("Some title")+ #Add title to graph
+  xlab("Sepal length")+ #Add x-axis labels
+  ylab("Sepal width")+ #Add y-axis labels
+  scale_fill_manual(values = c("#009AC7","#132B41","#8B1A4F")) # Change colors using HEX colors
+dev.off()
+```
+
+    ## quartz_off_screen 
+    ##                 2
+
+``` r
+jpeg("Boxplot of iris data.jpg", width = 10, height = 10, units="cm", res=200)
 ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
   geom_boxplot()+ #What kind of graph?
   ggtitle("Some title")+ #Add title to graph
