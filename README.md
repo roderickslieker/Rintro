@@ -53,11 +53,11 @@ It has many advantages: integrated help, use of tab key, more stable than Rgui.
 Suggested literature
 --------------------
 
-*Google is your best friend. Every question has been asked more than once by someone else*
+Google is your best friend. Every question has been asked more than once by someone else!
 
-*The art of R programming, Normal Matlof, Starch Press*
+The art of R programming, Normal Matlof, Starch Press
 
-*Introductory Statistics with R, Peter Dalgaard, Springer*
+Introductory Statistics with R, Peter Dalgaard, Springer
 
 2. Starting simple with R
 =========================
