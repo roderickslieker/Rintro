@@ -5,7 +5,7 @@ Introduction to R
     -   [The R interface](#the-r-interface)
     -   [Other software to be used with R](#other-software-to-be-used-with-r)
     -   [Suggested literature](#suggested-literature)
--   [2. Starting simple with R](#starting-simple-with-r)
+-   [Starting simple with R](#starting-simple-with-r)
 -   [3. The main classes](#the-main-classes)
 -   [4. Objects](#objects)
     -   [Creating objects](#creating-objects)
@@ -59,8 +59,8 @@ Google is your best friend. Every question has been asked more than once by some
 
 *Introductory Statistics with R, Peter Dalgaard, Springer*
 
-2. Starting simple with R
-=========================
+Starting simple with R
+======================
 
 ``` r
 1+1
