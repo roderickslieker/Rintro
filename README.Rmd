@@ -11,8 +11,7 @@ output:
 http://goo.gl/cWAAyv
 
 
-# 1. Introduction #
-
+# 1. Introduction 
 
 ## The R interface ##
 - Originated from proprietary S programming language
