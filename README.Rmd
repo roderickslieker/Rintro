@@ -19,7 +19,7 @@ http://goo.gl/cWAAyv
 
 - Originated from proprietary S programming language
 
-- Comes in many flavours, like GUI (hardly a user interface), Rstudio, Eclipse
+- Comes in many flavours, like R gui (hardly a user interface), Rstudio, Eclipse
 
 - Save scripts as R files, can be opened with all kinds of software (R, Rstudio, sublime, Notepad etc. )
 
@@ -86,6 +86,40 @@ rep(x = 1,times = 5)
 seq(from = 1,to = 5, by=0.5)
 seq(from = 1,to = 5, length.out = 100)
 ```
+<br>
+
+<br>
+
+# Operators #
+
+Operators can be used to compare and select on numbers, characters (and sometimes factors)
+
+```{r logicals, results='asis', echo=F}
+library(knitr)
+kable(x = data.frame(Operator = c("+","-","*","/","^","%%","%/%"), Description = c("Addition","Substraction","Multiplication","Division","Exponentiation","Modulus (7%%3 is 1)","Integer division (7%/%3 is 2)")))
+
+kable(x = data.frame(Operator = c("<","<=",">",">=","==","%in%","!=","!x","x|y","x&y","isTRUE(x)"), Description = c("Less than", "Equal to or less than","More than","Equal to or more than","Equal to","Is it in there?","Not equal to","Not x","x OR y","x AND y","Is X TRUE?")))
+```
+
+```{r examples}
+#Examples
+3 != 5
+5 != 5
+5 == 5
+
+#Why would you want that?
+#Great for subsetting vectors but also objects!
+a <- 1:10
+a
+a[a > 5]
+a[a <= 2]
+a[a==5]
+a %in% 5
+a[a %in% 2]
+a[a==3 | a==5]
+```
+
+
 
 <br>
 
@@ -175,14 +209,20 @@ colnames(df)
 ## If you don't get the error, google it. There is ALWAYS someone before you who had the same question.
 ## This does work. Why?
 rownames(mtrx) <- c("A","B","C","D","E")
+```
 
 
+##Modifying objects##
 
+If the comma is on the right of the indices so [1:2,] then it is applied to the *rows*
 
-#Modifying objects
+If the comma is on the left of the indices so [,1:2] then it is applied on the *columns*
 
+```{r modifyingP2}
 #Data.frame
 df[1:2, ] #First two lines
+df[,1:2]
+df[df$Group == 1,]
 
 #Different (order has changed!)
 df[2:1, ] 
@@ -192,6 +232,12 @@ df[c("A","B"),]
 
 #Or colnames
 df[,c("Group","Outcome")]
+
+#Subset using operators
+df[df$Group ==1,]
+df[df$Group >= 2,]
+df[df$Group != 1,]
+df[rownames(df) != "A",]
 
 #Add new columns
 df$NewCol <- c(1,2,5)
@@ -391,6 +437,7 @@ dev.off()
 <br>
 
 # Other topics that could be covered #
+- If/else statements
 - Writing functions
 - For-loops
 - Else?

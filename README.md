@@ -6,10 +6,12 @@ Introduction to R
     -   [Other software to be used with R](#other-software-to-be-used-with-r)
     -   [Suggested literature](#suggested-literature)
 -   [Starting simple with R](#starting-simple-with-r)
+-   [Operators](#operators)
 -   [The main classes](#the-main-classes)
 -   [Objects](#objects)
     -   [Creating objects](#creating-objects)
     -   [Modifying objects](#modifying-objects)
+    -   [Modifying objects](#modifying-objects-1)
 -   [Loading and saving from R](#loading-and-saving-from-r)
     -   [Reading from files](#reading-from-files)
     -   [Save to files](#save-to-files)
@@ -34,7 +36,7 @@ The R interface
 
 -   Originated from proprietary S programming language
 
--   Comes in many flavours, like GUI (hardly a user interface), Rstudio, Eclipse
+-   Comes in many flavours, like R gui (hardly a user interface), Rstudio, Eclipse
 
 -   Save scripts as R files, can be opened with all kinds of software (R, Rstudio, sublime, Notepad etc. )
 
@@ -147,6 +149,103 @@ seq(from = 1,to = 5, length.out = 100)
     ##  [85] 4.393939 4.434343 4.474747 4.515152 4.555556 4.595960 4.636364
     ##  [92] 4.676768 4.717172 4.757576 4.797980 4.838384 4.878788 4.919192
     ##  [99] 4.959596 5.000000
+
+<br>
+
+<br>
+
+Operators
+=========
+
+Operators can be used to compare and select on numbers, characters (and sometimes factors)
+
+| Operator | Description                   |
+|:---------|:------------------------------|
+| +        | Addition                      |
+| -        | Substraction                  |
+| \*       | Multiplication                |
+| /        | Division                      |
+| ^        | Exponentiation                |
+| %%       | Modulus (7%%3 is 1)           |
+| %/%      | Integer division (7%/%3 is 2) |
+
+| Operator  | Description           |
+|:----------|:----------------------|
+| &lt;      | Less than             |
+| &lt;=     | Equal to or less than |
+| &gt;      | More than             |
+| &gt;=     | Equal to or more than |
+| ==        | Equal to              |
+| %in%      | Is it in there?       |
+| !=        | Not equal to          |
+| !x        | Not x                 |
+| x|y       | x OR y                |
+| x&y       | x AND y               |
+| isTRUE(x) | Is X TRUE?            |
+
+``` r
+#Examples
+3 != 5
+```
+
+    ## [1] TRUE
+
+``` r
+5 != 5
+```
+
+    ## [1] FALSE
+
+``` r
+5 == 5
+```
+
+    ## [1] TRUE
+
+``` r
+#Why would you want that?
+#Great for subsetting vectors but also objects!
+a <- 1:10
+a
+```
+
+    ##  [1]  1  2  3  4  5  6  7  8  9 10
+
+``` r
+a[a > 5]
+```
+
+    ## [1]  6  7  8  9 10
+
+``` r
+a[a <= 2]
+```
+
+    ## [1] 1 2
+
+``` r
+a[a==5]
+```
+
+    ## [1] 5
+
+``` r
+a %in% 5
+```
+
+    ##  [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+
+``` r
+a[a %in% 2]
+```
+
+    ## [1] 2
+
+``` r
+a[a==3 | a==5]
+```
+
+    ## [1] 3 5
 
 <br>
 
@@ -309,12 +408,16 @@ colnames(df)
 ## If you don't get the error, google it. There is ALWAYS someone before you who had the same question.
 ## This does work. Why?
 rownames(mtrx) <- c("A","B","C","D","E")
+```
 
+Modifying objects
+-----------------
 
+If the comma is on the right of the indices so \[1:2,\] then it is applied to the *rows*
 
+If the comma is on the left of the indices so \[,1:2\] then it is applied on the *columns*
 
-#Modifying objects
-
+``` r
 #Data.frame
 df[1:2, ] #First two lines
 ```
@@ -322,6 +425,22 @@ df[1:2, ] #First two lines
     ##   Group Outcome
     ## A     1       2
     ## B     2       3
+
+``` r
+df[,1:2]
+```
+
+    ##   Group Outcome
+    ## A     1       2
+    ## B     2       3
+    ## C     3       6
+
+``` r
+df[df$Group == 1,]
+```
+
+    ##   Group Outcome
+    ## A     1       2
 
 ``` r
 #Different (order has changed!)
@@ -348,6 +467,38 @@ df[,c("Group","Outcome")]
 
     ##   Group Outcome
     ## A     1       2
+    ## B     2       3
+    ## C     3       6
+
+``` r
+#Subset using operators
+df[df$Group ==1,]
+```
+
+    ##   Group Outcome
+    ## A     1       2
+
+``` r
+df[df$Group >= 2,]
+```
+
+    ##   Group Outcome
+    ## B     2       3
+    ## C     3       6
+
+``` r
+df[df$Group != 1,]
+```
+
+    ##   Group Outcome
+    ## B     2       3
+    ## C     3       6
+
+``` r
+df[rownames(df) != "A",]
+```
+
+    ##   Group Outcome
     ## B     2       3
     ## C     3       6
 
@@ -721,6 +872,7 @@ dev.off()
 Other topics that could be covered
 ==================================
 
+-   If/else statements
 -   Writing functions
 -   For-loops
 -   Else?
