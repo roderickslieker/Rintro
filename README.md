@@ -19,6 +19,7 @@ Introduction to R
 -   [Packages](#packages)
 -   [Plotting](#plotting)
     -   [Saving plots](#saving-plots)
+-   [More advanced R: creating and running for-loops and functions](#more-advanced-r-creating-and-running-for-loops-and-functions)
 -   [Other topics that could be covered](#other-topics-that-could-be-covered)
 
 This page can be found at:
@@ -39,6 +40,8 @@ The R interface
 -   Comes in many flavours, like R gui (hardly a user interface), Rstudio, Eclipse
 
 -   Save scripts as R files, can be opened with all kinds of software (R, Rstudio, sublime, Notepad etc. )
+
+-   Annotatate scripts: that means that one uses the hashtag to write in a few lines what is going on in that bit of syntax.
 
 -   Safer and more reproducible than other software: source data is not changed, scripts can be shared with others
 
@@ -106,7 +109,7 @@ aa+aa
 ``` r
 #But professionals use the arrow and not the equal sign to distinguish from  == :)
 
-#Or multiple values ot variables
+#Or multiple values or variables
 b <- c(1,2,3) # c, concatenate
 b
 ```
@@ -574,7 +577,7 @@ str(IrisCSV)
 
 ``` r
 #Reading tab delimited 
-IrisTXT <- read.table("Iris.txt", sep="\t", header=T)
+IrisTXT <- read.table("Iris as text file.txt", sep="\t", header=T)
 head(IrisTXT)
 ```
 
@@ -832,6 +835,19 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
 
 ![](README_files/figure-markdown_github-ascii_identifiers/plotting-7.png)
 
+``` r
+#One can also different types of plots on top of each other
+ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
+  geom_boxplot()+ #What kind of graph?
+  geom_jitter(width=0.2)+
+  ggtitle("Some title")+ #Add title to graph
+  xlab("Sepal length")+ #Add x-axis labels
+  ylab("Sepal width")+ #Add y-axis labels
+  scale_fill_manual(values = c("#009AC7","#132B41","#8B1A4F")) # Change colors using HEX colors
+```
+
+![](README_files/figure-markdown_github-ascii_identifiers/ontop-1.png)
+
 Saving plots
 ------------
 
@@ -864,6 +880,43 @@ dev.off()
 
     ## quartz_off_screen 
     ##                 2
+
+More advanced R: creating and running for-loops and functions
+=============================================================
+
+A function can replicate the same thing over and over for multiple columns to reduce the amount of work and reduce errors. We use the `EuStockMarkets` dataset
+
+``` r
+data("EuStockMarkets")
+
+# We want the characteristics for each row 
+getSummary <- function(col, Data)
+{
+  co <- colnames(Data)[col]
+  me <- mean(Data[,col])
+  sdv <- sd(Data[,col])
+  #Now we create a dataset to give everything back
+  out <- data.frame(Group = co, Mean = me, SD=sdv)
+  out
+}
+
+getSummary(col = 1, Data=EuStockMarkets)
+```
+
+    ##   Group     Mean       SD
+    ## 1   DAX 2530.657 1084.793
+
+``` r
+#But now for all
+dim(EuStockMarkets)
+```
+
+    ## [1] 1860    4
+
+``` r
+res <- lapply(1:4, getSummary, Data=EuStockMarkets)
+newTable <- do.call(rbind, res)
+```
 
 <br>
 
