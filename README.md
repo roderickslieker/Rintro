@@ -916,7 +916,14 @@ dim(EuStockMarkets)
 ``` r
 res <- lapply(1:4, getSummary, Data=EuStockMarkets)
 newTable <- do.call(rbind, res)
+newTable
 ```
+
+    ##   Group     Mean        SD
+    ## 1   DAX 2530.657 1084.7927
+    ## 2   SMI 3376.224 1663.0265
+    ## 3   CAC 2227.828  580.3142
+    ## 4  FTSE 3565.643  976.7155
 
 <br>
 
