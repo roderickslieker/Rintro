@@ -9,6 +9,10 @@ output:
 This page can be found at:  
 http://goo.gl/cWAAyv
 
+<br>
+
+<br>
+
 # Introduction #
 
 ## The R interface ##
@@ -31,9 +35,13 @@ It has many advantages: integrated help, use of tab key, more stable than Rgui.
 
 - Sublime when only typing syntax (to link with servers): https://www.sublimetext.com/
 
-- Packages: for an (almost infinity) number of applications people have developed packages, for example Bioconductor: http://bioconductor.org/
+- Packages: for an (almost infinity) number of applications people have developed packages, for example:
 
-- Git to track your code: https://git.lumc.nl 
+CRAN: https://cran.r-project.org/
+
+Bioconductor: http://bioconductor.org/
+
+- Git to track your code: www.github.com
 
 ## Suggested literature ##
   
@@ -46,6 +54,10 @@ Google is your best friend. Every question has been asked more than once by some
 *Introductory Statistics with R, Peter Dalgaard, Springer*
 
 <img src="https://images.springer.com/sgw/books/medium/9780387790534.jpg" alt="Dalgaard" width="150">
+
+<br>
+
+<br>
 
 # Starting simple with R #
 
@@ -71,9 +83,13 @@ b
 
 #Sequences
 rep(x = 1,times = 5)
-seq(from = 1,to = 5,by=0.5)
-seq(from = 1,to = 5,length.out = 100)
+seq(from = 1,to = 5, by=0.5)
+seq(from = 1,to = 5, length.out = 100)
 ```
+
+<br>
+
+<br>
 
 # The main classes #
 
@@ -85,7 +101,7 @@ seq(from = 1,to = 5,length.out = 100)
 ```{r classes}
 #Numeric
 num <- c(1,2,3)
-#Class can be used to view the classs
+#Class can be used to view the class
 class(num)
 
 #Character
@@ -100,6 +116,10 @@ class(factors)
 # List 
 list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
 ```
+
+<br>
+
+<br>
 
 # Objects #
 
@@ -183,6 +203,10 @@ mtrx[1:2,]
 mtrx[1:2] #Different!
 ```
 
+<br>
+
+<br>
+
 # Loading and saving from R #
 
 ## Reading from files ##
@@ -257,6 +281,9 @@ colnames(statistics) <- c("Mean","SD","n")
 statistics
 ```
 
+<br>
+
+<br>
 
 # Packages #
 
@@ -273,7 +300,11 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("IRanges")
 
 
-#8.Plotting
+<br>
+
+<br>
+
+#Plotting
 R base (without packages) can plot all kind of plots but are not very nice. 
 
 ggplot2 is a very commonly used package for plotting. Although the approach is a bit different, the plots are nicer and more flexible to change. For more help see: http://ggplot2.tidyverse.org/reference/ or google!
@@ -294,7 +325,7 @@ ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width, col=Species))+ # Define variable
 
 
 # Boxplot
-boxplot(iris$Sepal.Length~IrisCSV$Species, xlab="Sepal length", ylab="Sepal width")
+boxplot(iris$Sepal.Length~iris$Species, xlab="Sepal length", ylab="Sepal width")
 
 ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+ #Define variables
   geom_boxplot()+ #What kind of graph?
@@ -312,7 +343,7 @@ ggplot(iris, aes(x=Species, y=Sepal.Length, col=Species))+ #Define variables
   scale_colour_manual(values = c("#009AC7","#132B41","#8B1A4F")) 
 
 # Smoothed line graph
-ggplot(IrisCSV, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
   geom_point()+
   geom_smooth(method=lm)+
   ggtitle("Some title")+
@@ -354,5 +385,14 @@ dev.off()
 
 ```
 
+
+<br>
+
+<br>
+
+# Other topics that could be covered #
+- Writing functions
+- For-loops
+- Else?
 
 

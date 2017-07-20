@@ -15,11 +15,16 @@ Introduction to R
     -   [Save to files](#save-to-files)
 -   [Describing data using descriptive statistics](#describing-data-using-descriptive-statistics)
 -   [Packages](#packages)
--   [8.Plotting](#plotting)
+-   [Plotting](#plotting)
     -   [Saving plots](#saving-plots)
+-   [Other topics that could be covered](#other-topics-that-could-be-covered)
 
 This page can be found at:
 <http://goo.gl/cWAAyv>
+
+<br>
+
+<br>
 
 Introduction
 ============
@@ -46,9 +51,13 @@ It has many advantages: integrated help, use of tab key, more stable than Rgui.
 
 -   Sublime when only typing syntax (to link with servers): <https://www.sublimetext.com/>
 
--   Packages: for an (almost infinity) number of applications people have developed packages, for example Bioconductor: <http://bioconductor.org/>
+-   Packages: for an (almost infinity) number of applications people have developed packages, for example:
 
--   Git to track your code: <https://git.lumc.nl>
+CRAN: <https://cran.r-project.org/>
+
+Bioconductor: <http://bioconductor.org/>
+
+-   Git to track your code: www.github.com
 
 Suggested literature
 --------------------
@@ -62,6 +71,10 @@ Google is your best friend. Every question has been asked more than once by some
 *Introductory Statistics with R, Peter Dalgaard, Springer*
 
 <img src="https://images.springer.com/sgw/books/medium/9780387790534.jpg" alt="Dalgaard" width="150">
+
+<br>
+
+<br>
 
 Starting simple with R
 ======================
@@ -110,13 +123,13 @@ rep(x = 1,times = 5)
     ## [1] 1 1 1 1 1
 
 ``` r
-seq(from = 1,to = 5,by=0.5)
+seq(from = 1,to = 5, by=0.5)
 ```
 
     ## [1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
 
 ``` r
-seq(from = 1,to = 5,length.out = 100)
+seq(from = 1,to = 5, length.out = 100)
 ```
 
     ##   [1] 1.000000 1.040404 1.080808 1.121212 1.161616 1.202020 1.242424
@@ -135,6 +148,10 @@ seq(from = 1,to = 5,length.out = 100)
     ##  [92] 4.676768 4.717172 4.757576 4.797980 4.838384 4.878788 4.919192
     ##  [99] 4.959596 5.000000
 
+<br>
+
+<br>
+
 The main classes
 ================
 
@@ -146,7 +163,7 @@ The main classes
 ``` r
 #Numeric
 num <- c(1,2,3)
-#Class can be used to view the classs
+#Class can be used to view the class
 class(num)
 ```
 
@@ -181,6 +198,10 @@ list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
     ## 
     ## $GroupC
     ## [1] 3 4 5
+
+<br>
+
+<br>
 
 Objects
 =======
@@ -355,6 +376,10 @@ mtrx[1:2] #Different!
 ```
 
     ## [1] 1 2
+
+<br>
+
+<br>
 
 Loading and saving from R
 =========================
@@ -551,6 +576,10 @@ statistics
     ## versicolor 5.936 0.5161711 50
     ## virginica  6.588 0.6358796 50
 
+<br>
+
+<br>
+
 Packages
 ========
 
@@ -566,8 +595,12 @@ source("<https://bioconductor.org/biocLite.R>")
 
 biocLite("IRanges")
 
-8.Plotting
-==========
+<br>
+
+<br>
+
+Plotting
+========
 
 R base (without packages) can plot all kind of plots but are not very nice.
 
@@ -595,7 +628,7 @@ ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width, col=Species))+ # Define variable
 
 ``` r
 # Boxplot
-boxplot(iris$Sepal.Length~IrisCSV$Species, xlab="Sepal length", ylab="Sepal width")
+boxplot(iris$Sepal.Length~iris$Species, xlab="Sepal length", ylab="Sepal width")
 ```
 
 ![](README_files/figure-markdown_github-ascii_identifiers/plotting-3.png)
@@ -625,7 +658,7 @@ ggplot(iris, aes(x=Species, y=Sepal.Length, col=Species))+ #Define variables
 
 ``` r
 # Smoothed line graph
-ggplot(IrisCSV, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, col=Species))+
   geom_point()+
   geom_smooth(method=lm)+
   ggtitle("Some title")+
@@ -680,3 +713,14 @@ dev.off()
 
     ## quartz_off_screen 
     ##                 2
+
+<br>
+
+<br>
+
+Other topics that could be covered
+==================================
+
+-   Writing functions
+-   For-loops
+-   Else?
