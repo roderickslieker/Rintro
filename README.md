@@ -8,10 +8,12 @@ Introduction to R
 -   [Starting simple with R](#starting-simple-with-r)
 -   [Operators](#operators)
 -   [The main classes](#the-main-classes)
+    -   [Switching between classes](#switching-between-classes)
 -   [Objects](#objects)
     -   [Creating objects](#creating-objects)
     -   [Modifying objects](#modifying-objects)
-    -   [Modifying objects](#modifying-objects-1)
+    -   [Modifying objects part 2](#modifying-objects-part-2)
+    -   [Switching classes](#switching-classes)
 -   [Loading and saving from R](#loading-and-saving-from-r)
     -   [Reading from files](#reading-from-files)
     -   [Save to files](#save-to-files)
@@ -301,6 +303,62 @@ list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
     ## $GroupC
     ## [1] 3 4 5
 
+Switching between classes
+-------------------------
+
+You can also convert one class to the other:
+
+``` r
+#From character to numeric
+a <- c("1","2","3")
+class(a)
+```
+
+    ## [1] "character"
+
+``` r
+head(a)
+```
+
+    ## [1] "1" "2" "3"
+
+``` r
+b <- as.numeric(a)
+class(b)
+```
+
+    ## [1] "numeric"
+
+``` r
+head(b)
+```
+
+    ## [1] 1 2 3
+
+``` r
+#From numeric to character
+c <- as.character(b)
+class(c)
+```
+
+    ## [1] "character"
+
+``` r
+#From factor to numeric
+af <- factor(c("5","6","7"))
+# This is not right:
+as.numeric(af)
+```
+
+    ## [1] 1 2 3
+
+``` r
+# But this is:
+as.numeric(as.character(af))
+```
+
+    ## [1] 5 6 7
+
 <br>
 
 <br>
@@ -413,8 +471,8 @@ colnames(df)
 rownames(mtrx) <- c("A","B","C","D","E")
 ```
 
-Modifying objects
------------------
+Modifying objects part 2
+------------------------
 
 If the comma is on the right of the indices so \[1:2,\] then it is applied to the *rows*
 
@@ -530,6 +588,17 @@ mtrx[1:2] #Different!
 ```
 
     ## [1] 1 2
+
+Switching classes
+-----------------
+
+``` r
+#From matrix to dataframe
+dfm <- as.data.frame(mtrx)
+
+#From dataframe to matrix
+dm <- as.matrix(dfm) #Will convert all columns to 1 class, likely character!
+```
 
 <br>
 

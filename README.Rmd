@@ -153,6 +153,36 @@ class(factors)
 list(GroupA = 1:3, GroupB = 2:5 , GroupC = 3:5)
 ```
 
+
+## Switching between classes ##
+
+You can also convert one class to the other:
+
+```{r switch}
+#From character to numeric
+a <- c("1","2","3")
+class(a)
+head(a)
+b <- as.numeric(a)
+class(b)
+head(b)
+
+#From numeric to character
+c <- as.character(b)
+class(c)
+
+
+#From factor to numeric
+af <- factor(c("5","6","7"))
+# This is not right:
+as.numeric(af)
+# But this is:
+as.numeric(as.character(af))
+```
+
+
+
+
 <br>
 
 <br>
@@ -214,7 +244,7 @@ rownames(mtrx) <- c("A","B","C","D","E")
 ```
 
 
-##Modifying objects##
+##Modifying objects part 2##
 
 If the comma is on the right of the indices so [1:2,] then it is applied to the *rows*
 
@@ -251,6 +281,14 @@ mtrx[1:2,]
 mtrx[1:2] #Different!
 ```
 
+## Switching classes ##
+```{r switchclass}
+#From matrix to dataframe
+dfm <- as.data.frame(mtrx)
+
+#From dataframe to matrix
+dm <- as.matrix(dfm) #Will convert all columns to 1 class, likely character!
+```
 <br>
 
 <br>
