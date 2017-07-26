@@ -37,17 +37,19 @@ Introduction
 The R interface
 ---------------
 
--   Originated from proprietary S programming language
+-   Originated from proprietary S programming language (80s) and developed into R (1995)
 
 -   Comes in many flavours, like R gui (hardly a user interface), Rstudio, Eclipse
 
--   Save scripts as R files, can be opened with all kinds of software (R, Rstudio, sublime, Notepad etc. )
+-   Save scripts as R files, which can be opened with all kinds of software (R, Rstudio, sublime, Notepad etc. )
 
 -   Annotatate scripts: that means that one uses the hashtag to write in a few lines what is going on in that bit of syntax.
 
 -   Safer and more reproducible than other software: source data is not changed, scripts can be shared with others
 
 -   Save objects to Rdata files, so you can continue with it next time without the need for rerunning the complete script
+
+<br>
 
 Other software to be used with R
 --------------------------------
@@ -65,6 +67,8 @@ CRAN: <https://cran.r-project.org/>
 Bioconductor: <http://bioconductor.org/>
 
 -   Git to track your code: www.github.com
+
+<br>
 
 Suggested literature
 --------------------
