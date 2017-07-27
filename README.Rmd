@@ -17,7 +17,7 @@ http://goo.gl/cWAAyv
 
 ## The R interface ##
 
-<img src="https://www.r-project.org/Rlogo.png", alt="Rlogo", width="150">
+<img src="Rlogo.png" alt="Matlof"  width="150">
 
 <br>
 
@@ -63,11 +63,11 @@ Google is your best friend. Every question has been asked more than once by some
 
 *The art of R programming, Normal Matlof, Starch Press*
 
-<img src="http://dev-books.com/img/ol/jpeg/1593273843.jpeg" alt="Matlof"  width="150">
+<img src="ArtOfR.jpeg" alt="Matlof"  width="150">
 
 *Introductory Statistics with R, Peter Dalgaard, Springer*
 
-<img src="https://images.springer.com/sgw/books/medium/9780387790534.jpg" alt="Dalgaard" width="150">
+<img src="IntroWithR.jpeg" alt="Dalgaard" width="150">
 
 <br>
 
