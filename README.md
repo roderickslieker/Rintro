@@ -53,6 +53,8 @@ The R interface
 
 -   Save objects to \`Rdata files, so you can continue with it next time without the need for rerunning the complete script
 
+-   Above all: it's FREE well maintained software with a large user community in each (scientific) field
+
 <br>
 
 <br>
@@ -822,13 +824,13 @@ Packages are an infinite rich source to facilitate your analysis
 
 *To install packages from CRAN*
 
-install.packages("ggplot2")
+`install.packages("ggplot2")`
 
 *Or when from Bioconductor:*
 
-source("<https://bioconductor.org/biocLite.R>")
+`source("https://bioconductor.org/biocLite.R")`
 
-biocLite("IRanges")
+`biocLite("IRanges")`
 
 <br>
 
