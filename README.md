@@ -37,7 +37,7 @@ Introduction
 The R interface
 ---------------
 
-<img src="https://www.r-project.org/Rlogo.png", alt="R logo",width=150>
+<img src="https://www.r-project.org/Rlogo.png", alt="Rlogo", width="150">
 
 <br>
 
