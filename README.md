@@ -21,6 +21,8 @@ Introduction to R
 -   [Packages](#packages)
 -   [Plotting](#plotting)
     -   [Saving plots](#saving-plots)
+-   [Correlation tests in R](#correlation-tests-in-r)
+-   [Simple statistical models in R](#simple-statistical-models-in-r)
 -   [More advanced R: creating and running for-loops and functions](#more-advanced-r-creating-and-running-for-loops-and-functions)
 -   [Other topics that could be covered](#other-topics-that-could-be-covered)
 
@@ -683,6 +685,193 @@ str(IrisTXT)
     ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
     ##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 
+``` r
+#Reading XLSX. But: usally VERY slow and requires Java. 
+library(xlsx)
+```
+
+    ## Loading required package: rJava
+
+    ## Loading required package: xlsxjars
+
+``` r
+irisxlsx <- read.xlsx("Iris as xlsx file.xlsx", sheetIndex = 1)
+
+str(irisxlsx)
+```
+
+    ## 'data.frame':    150 obs. of  5 variables:
+    ##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+    ##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+    ##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+    ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+    ##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+
+``` r
+#To speed up, one can define colclasses.
+#Note: system.time is a function to track the speed of functions
+system.time(read.xlsx("Iris as xlsx file.xlsx", sheetIndex = 1))
+```
+
+    ##    user  system elapsed 
+    ##   0.720   0.013   0.453
+
+``` r
+system.time(read.xlsx("Iris as xlsx file.xlsx", sheetIndex = 1, colClasses = c("numeric","numeric","numeric","numeric","character")))
+```
+
+    ##    user  system elapsed 
+    ##   0.684   0.011   0.322
+
+``` r
+#SPSS
+library(Hmisc)
+```
+
+    ## Loading required package: lattice
+
+    ## Loading required package: survival
+
+    ## Loading required package: Formula
+
+    ## Loading required package: ggplot2
+
+    ## 
+    ## Attaching package: 'Hmisc'
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     format.pval, round.POSIXt, trunc.POSIXt, units
+
+``` r
+lldata <- spss.get("LifeLines.sav")
+head(lldata)
+```
+
+    ##   entity.id GESLACHT  GEWICHT   LENGTE HEALTH17A1
+    ## 1     32674    Woman 73.39930 166.0011        Yes
+    ## 2     79597      Man 65.46211 181.1047         No
+    ## 3     17027    Woman 71.53435 187.1154         No
+    ## 4     79747    Woman 61.82766 180.7776         No
+    ## 5     88613    Woman 83.54524 167.8344         No
+    ## 6     90622      Man 73.20778 189.0722         No
+    ##                                     HEALTH17B1
+    ## 1 Type 2 (adult-onset diabetes, later in life)
+    ## 2 Type 2 (adult-onset diabetes, later in life)
+    ## 3 Type 2 (adult-onset diabetes, later in life)
+    ## 4 Type 2 (adult-onset diabetes, later in life)
+    ## 5 Type 2 (adult-onset diabetes, later in life)
+    ## 6 Type 2 (adult-onset diabetes, later in life)
+    ##                               HEALTH17D1 DBPa SMK11 SMK31 SMK4A1 SMK4A21
+    ## 1 I am not treated for diabetes mellitus   90    No    No      3      No
+    ## 2 I am not treated for diabetes mellitus   78   Yes   Yes      0      No
+    ## 3 I am not treated for diabetes mellitus   79    No   Yes      2      No
+    ## 4 I am not treated for diabetes mellitus   60    No    No      5      No
+    ## 5 I am not treated for diabetes mellitus   81    No    No      0      No
+    ## 6 I am not treated for diabetes mellitus   95   Yes    No      0      No
+    ##          Date
+    ## 1 13702608000
+    ## 2 13702694400
+    ## 3 13702780800
+    ## 4 13702867200
+    ## 5 13702953600
+    ## 6 13703040000
+
+``` r
+str(lldata)
+```
+
+    ## 'data.frame':    5024 obs. of  13 variables:
+    ##  $ entity.id :Classes 'labelled', 'numeric'  atomic [1:5024] 32674 79597 17027 79747 88613 90622 110450 158803 145545 174641 ...
+    ##   .. ..- attr(*, "label")= Named chr "Participant ID"
+    ##   .. .. ..- attr(*, "names")= chr "entity_id"
+    ##  $ GESLACHT  : Factor w/ 2 levels "Man","Woman": 2 1 2 2 2 1 1 1 2 1 ...
+    ##   ..- attr(*, "label")= Named chr "Sex"
+    ##   .. ..- attr(*, "names")= chr "GESLACHT"
+    ##  $ GEWICHT   :Classes 'labelled', 'numeric'  atomic [1:5024] 73.4 65.5 71.5 61.8 83.5 ...
+    ##   .. ..- attr(*, "label")= Named chr "Weight in kg"
+    ##   .. .. ..- attr(*, "names")= chr "GEWICHT"
+    ##  $ LENGTE    :Classes 'labelled', 'numeric'  atomic [1:5024] 166 181 187 181 168 ...
+    ##   .. ..- attr(*, "label")= Named chr "Height in cm"
+    ##   .. .. ..- attr(*, "names")= chr "LENGTE"
+    ##  $ HEALTH17A1: Factor w/ 2 levels "Yes","No": 1 2 2 2 2 2 2 2 2 2 ...
+    ##   ..- attr(*, "label")= Named chr "Do you have diabetes mellitus (diabetes)?"
+    ##   .. ..- attr(*, "names")= chr "HEALTH17A1"
+    ##  $ HEALTH17B1: Factor w/ 4 levels "Type 1 (juvenile diabetes, since childhood)",..: 2 2 2 2 2 2 2 2 2 2 ...
+    ##   ..- attr(*, "label")= Named chr "What type of diabetes do you have?"
+    ##   .. ..- attr(*, "names")= chr "HEALTH17B1"
+    ##  $ HEALTH17D1: Factor w/ 5 levels "I am not treated for diabetes mellitus",..: 1 1 1 1 1 1 1 1 1 1 ...
+    ##   ..- attr(*, "label")= Named chr "How are you treated?"
+    ##   .. ..- attr(*, "names")= chr "HEALTH17D1"
+    ##  $ DBPa      :Classes 'labelled', 'numeric'  atomic [1:5024] 90 78 79 60 81 95 83 71 101 101 ...
+    ##   .. ..- attr(*, "label")= Named chr "Diastolic Blood Pressure in mm Hg"
+    ##   .. .. ..- attr(*, "names")= chr "DBPa"
+    ##  $ SMK11     : Factor w/ 2 levels "Yes","No": 2 1 2 2 2 1 1 1 2 2 ...
+    ##   ..- attr(*, "label")= Named chr "Have you ever smoked for a full year? "
+    ##   .. ..- attr(*, "names")= chr "SMK11"
+    ##  $ SMK31     : Factor w/ 2 levels "Yes","No": 2 1 1 2 2 2 2 2 2 2 ...
+    ##   ..- attr(*, "label")= Named chr "Do you smoke now, or have you smoked in the past month?"
+    ##   .. ..- attr(*, "names")= chr "SMK31"
+    ##  $ SMK4A1    :Classes 'labelled', 'numeric'  atomic [1:5024] 3 0 2 5 0 0 0 3 6 0 ...
+    ##   .. ..- attr(*, "label")= Named chr "number of cigarettes / roll-ups per day"
+    ##   .. .. ..- attr(*, "names")= chr "SMK4A1"
+    ##  $ SMK4A21   : Factor w/ 3 levels "Yes","Yes, but less than 1 per day",..: 3 3 3 3 3 3 3 3 1 3 ...
+    ##   ..- attr(*, "label")= Named chr "Do you smoke cigarettes / roll-ups?"
+    ##   .. ..- attr(*, "names")= chr "SMK4A21"
+    ##  $ Date      : num  1.37e+10 1.37e+10 1.37e+10 1.37e+10 1.37e+10 ...
+    ##  - attr(*, "codepage")= int 65001
+
+``` r
+#Dates are transformed! So one needs to tell the function that there are dates present
+lldataNew <- spss.get("LifeLines.sav", datevars = "Date")
+head(lldataNew)
+```
+
+    ##   entity.id GESLACHT  GEWICHT   LENGTE HEALTH17A1
+    ## 1     32674    Woman 73.39930 166.0011        Yes
+    ## 2     79597      Man 65.46211 181.1047         No
+    ## 3     17027    Woman 71.53435 187.1154         No
+    ## 4     79747    Woman 61.82766 180.7776         No
+    ## 5     88613    Woman 83.54524 167.8344         No
+    ## 6     90622      Man 73.20778 189.0722         No
+    ##                                     HEALTH17B1
+    ## 1 Type 2 (adult-onset diabetes, later in life)
+    ## 2 Type 2 (adult-onset diabetes, later in life)
+    ## 3 Type 2 (adult-onset diabetes, later in life)
+    ## 4 Type 2 (adult-onset diabetes, later in life)
+    ## 5 Type 2 (adult-onset diabetes, later in life)
+    ## 6 Type 2 (adult-onset diabetes, later in life)
+    ##                               HEALTH17D1 DBPa SMK11 SMK31 SMK4A1 SMK4A21
+    ## 1 I am not treated for diabetes mellitus   90    No    No      3      No
+    ## 2 I am not treated for diabetes mellitus   78   Yes   Yes      0      No
+    ## 3 I am not treated for diabetes mellitus   79    No   Yes      2      No
+    ## 4 I am not treated for diabetes mellitus   60    No    No      5      No
+    ## 5 I am not treated for diabetes mellitus   81    No    No      0      No
+    ## 6 I am not treated for diabetes mellitus   95   Yes    No      0      No
+    ##         Date
+    ## 1 2017-01-01
+    ## 2 2017-01-02
+    ## 3 2017-01-03
+    ## 4 2017-01-04
+    ## 5 2017-01-05
+    ## 6 2017-01-06
+
+``` r
+#Class?
+class(lldataNew$Date)
+```
+
+    ## [1] "Date"
+
+``` r
+#This is a new class, namely dates! Can be used to calculate!
+DiffDate <- lldataNew$Date - lldataNew$Date
+head(DiffDate)
+```
+
+    ## Time differences in days
+    ## [1] 0 0 0 0 0 0
+
 Save to files
 -------------
 
@@ -963,6 +1152,134 @@ dev.off()
 
     ## quartz_off_screen 
     ##                 2
+
+Correlation tests in R
+======================
+
+``` r
+# We use iris data
+data(iris)
+
+#Pearson correlation 
+cor.test(iris$Sepal.Length, iris$Petal.Length)
+```
+
+    ## 
+    ##  Pearson's product-moment correlation
+    ## 
+    ## data:  iris$Sepal.Length and iris$Petal.Length
+    ## t = 21.646, df = 148, p-value < 2.2e-16
+    ## alternative hypothesis: true correlation is not equal to 0
+    ## 95 percent confidence interval:
+    ##  0.8270363 0.9055080
+    ## sample estimates:
+    ##       cor 
+    ## 0.8717538
+
+``` r
+#Or all pairwise at once
+cor(iris[,1:4])
+```
+
+    ##              Sepal.Length Sepal.Width Petal.Length Petal.Width
+    ## Sepal.Length    1.0000000  -0.1175698    0.8717538   0.8179411
+    ## Sepal.Width    -0.1175698   1.0000000   -0.4284401  -0.3661259
+    ## Petal.Length    0.8717538  -0.4284401    1.0000000   0.9628654
+    ## Petal.Width     0.8179411  -0.3661259    0.9628654   1.0000000
+
+``` r
+#Spearman 
+cor.test(iris$Sepal.Length, iris$Petal.Length, method = "spearman")
+```
+
+    ## Warning in cor.test.default(iris$Sepal.Length, iris$Petal.Length, method =
+    ## "spearman"): Cannot compute exact p-value with ties
+
+    ## 
+    ##  Spearman's rank correlation rho
+    ## 
+    ## data:  iris$Sepal.Length and iris$Petal.Length
+    ## S = 66429, p-value < 2.2e-16
+    ## alternative hypothesis: true rho is not equal to 0
+    ## sample estimates:
+    ##       rho 
+    ## 0.8818981
+
+``` r
+cor(iris[,1:4], method = "spearman")
+```
+
+    ##              Sepal.Length Sepal.Width Petal.Length Petal.Width
+    ## Sepal.Length    1.0000000  -0.1667777    0.8818981   0.8342888
+    ## Sepal.Width    -0.1667777   1.0000000   -0.3096351  -0.2890317
+    ## Petal.Length    0.8818981  -0.3096351    1.0000000   0.9376668
+    ## Petal.Width     0.8342888  -0.2890317    0.9376668   1.0000000
+
+<br>
+
+Simple statistical models in R
+==============================
+
+t.test: `t.test()` lm: `lm()` anova: `anova()`
+
+``` r
+data(iris)
+
+#T.test vs average
+t.test(iris$Sepal.Length, mu=6)
+```
+
+    ## 
+    ##  One Sample t-test
+    ## 
+    ## data:  iris$Sepal.Length
+    ## t = -2.3172, df = 149, p-value = 0.02186
+    ## alternative hypothesis: true mean is not equal to 6
+    ## 95 percent confidence interval:
+    ##  5.709732 5.976934
+    ## sample estimates:
+    ## mean of x 
+    ##  5.843333
+
+``` r
+#Linear model
+fit <- lm(Sepal.Length~Species, data=iris)
+fit$coefficients
+```
+
+    ##       (Intercept) Speciesversicolor  Speciesvirginica 
+    ##             5.006             0.930             1.582
+
+``` r
+#Anova
+an <- anova(fit)
+an$"Pr(>F)"[1]
+```
+
+    ## [1] 1.669669e-31
+
+``` r
+#Fit 1
+fit1 <- lm(Sepal.Length~Sepal.Width, data=iris)
+an1 <- anova(fit1)
+an1$"Pr(>F)"[1]
+```
+
+    ## [1] 0.1518983
+
+``` r
+#Chi-square test
+mt <- matrix(c(20,100,325,3000), ncol=2)
+colnames(mt) <- c("Yes", "No")
+rownames(mt) <- c("Brown", "Yellow")
+chisq.test(mt)
+```
+
+    ## 
+    ##  Pearson's Chi-squared test with Yates' continuity correction
+    ## 
+    ## data:  mt
+    ## X-squared = 5.3644, df = 1, p-value = 0.02055
 
 More advanced R: creating and running for-loops and functions
 =============================================================

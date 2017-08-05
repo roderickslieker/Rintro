@@ -75,6 +75,11 @@ Google is your best friend. Every question has been asked more than once by some
 
 <br>
 
+```{r maconly, echo=F}
+# Java issue on mac only
+dyn.load("/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/jre/lib/server/libjvm.dylib")
+```
+
 # Starting simple with R #
 
 ```{r start}
@@ -330,7 +335,36 @@ str(IrisCSV)
 IrisTXT <- read.table("Iris as text file.txt", sep="\t", header=T)
 head(IrisTXT)
 str(IrisTXT)
+
+#Reading XLSX. But: usally VERY slow and requires Java. 
+library(xlsx)
+irisxlsx <- read.xlsx("Iris as xlsx file.xlsx", sheetIndex = 1)
+
+str(irisxlsx)
+
+#To speed up, one can define colclasses.
+#Note: system.time is a function to track the speed of functions
+system.time(read.xlsx("Iris as xlsx file.xlsx", sheetIndex = 1))
+system.time(read.xlsx("Iris as xlsx file.xlsx", sheetIndex = 1, colClasses = c("numeric","numeric","numeric","numeric","character")))
+
+#SPSS
+library(Hmisc)
+lldata <- spss.get("LifeLines.sav")
+head(lldata)
+str(lldata)
+
+#Dates are transformed! So one needs to tell the function that there are dates present
+lldataNew <- spss.get("LifeLines.sav", datevars = "Date")
+head(lldataNew)
+
+#Class?
+class(lldataNew$Date)
+
+#This is a new class, namely dates! Can be used to calculate!
+DiffDate <- lldataNew$Date - lldataNew$Date
+head(DiffDate)
 ```
+
 
 ## Save to files ##
 
@@ -495,6 +529,58 @@ dev.off()
 
 ```
 
+# Correlation tests in R
+
+```{r cor}
+# We use iris data
+data(iris)
+
+#Pearson correlation 
+cor.test(iris$Sepal.Length, iris$Petal.Length)
+
+#Or all pairwise at once
+cor(iris[,1:4])
+
+#Spearman 
+cor.test(iris$Sepal.Length, iris$Petal.Length, method = "spearman")
+cor(iris[,1:4], method = "spearman")
+```
+
+<br>
+
+# Simple statistical models in R
+
+t.test: `t.test()`
+lm: `lm()`
+anova: `anova()`
+
+
+```{r statistics}
+data(iris)
+
+#T.test vs average
+t.test(iris$Sepal.Length, mu=6)
+
+#Linear model
+fit <- lm(Sepal.Length~Species, data=iris)
+fit$coefficients
+
+#Anova
+an <- anova(fit)
+an$"Pr(>F)"[1]
+
+#Fit 1
+fit1 <- lm(Sepal.Length~Sepal.Width, data=iris)
+an1 <- anova(fit1)
+an1$"Pr(>F)"[1]
+
+#Chi-square test
+mt <- matrix(c(20,100,325,3000), ncol=2)
+colnames(mt) <- c("Yes", "No")
+rownames(mt) <- c("Brown", "Yellow")
+chisq.test(mt)
+```
+
 #More advanced R: creating and running for-loops and functions#
 
 A function can replicate the same thing over and over for multiple columns to reduce the amount of work and reduce errors. We use the `EuStockMarkets` dataset
@@ -522,6 +608,10 @@ newTable <- do.call(rbind, res)
 newTable
 ```
 <br>
+
+
+
+
 
 <br>
 
